@@ -1,5 +1,7 @@
 import fs from "node:fs";
-import { ditherImage, readImage, encodeBmp } from "./sharp.mjs";
+import { readImage } from "./renderer/dev-utils.mjs";
+import { ditherImage } from "./renderer/dithering.mjs";
+import { encodeBmp } from "./renderer/encoding.mjs";
 
 const inputJpgImage = await readImage("in/rover_rgba.png");
 const dithered = await ditherImage(inputJpgImage);
