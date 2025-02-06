@@ -1,3 +1,7 @@
 declare module "canvas-dither" {
-  export function atkinson(image: RawRGBAImage): RawBWImage;
+  type CanvasDitherImage = { data: Buffer; width: number; height: number };
+
+  export function threshold(image: CanvasDitherImage, threshold: number): CanvasDitherImage;
+
+  export function atkinson(image: CanvasDitherImage): CanvasDitherImage;
 }
