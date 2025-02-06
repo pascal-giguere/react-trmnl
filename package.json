@@ -1,7 +1,7 @@
 {
   "name": "@pascal-giguere/starter-node",
   "description": "Pascal's starter Node project",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "Pascal Giguère",
   "homepage": "https://github.com/pascal-giguere/starter-node",
   "private": true,
@@ -17,7 +17,7 @@
     "npm": "please-use-yarn",
     "yarn": "4.6.0"
   },
-  "main": "dist/index.js",
+  "main": "dist/index.mjs",
   "scripts": {
     "build": "tsc",
     "serve": "node .",
@@ -27,6 +27,7 @@
     "@eslint/js": "^9.19.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.0",
+    "@types/react": "^19",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
     "eslint": "^9.19.0",
@@ -40,5 +41,10 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.22.0"
+  },
+  "dependencies": {
+    "bmp-ts": "^1.0.9",
+    "canvas-dither": "^1.0.1",
+    "sharp": "^0.33.5"
   }
 }

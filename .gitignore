@@ -13,5 +13,6 @@ yarn-error.log
 .pnp.*
 node_modules
 
-# Build folder
+# Output folders
 dist
+out
