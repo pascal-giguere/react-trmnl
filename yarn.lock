@@ -1166,15 +1166,12 @@ __metadata:
   resolution: "@pascal-giguere/starter-node@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.19.0"
-    "@types/floyd-steinberg": "npm:^1"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.13.0"
     "@types/react": "npm:^19"
     "@typescript-eslint/eslint-plugin": "npm:^8.22.0"
     "@typescript-eslint/parser": "npm:^8.22.0"
     bmp-ts: "npm:^1.0.9"
-    canvas-dither: "npm:^1.0.1"
-    clsx: "npm:^2.1.1"
     eslint: "npm:^9.19.0"
     eslint-config-prettier: "npm:^10.0.1"
     eslint-import-resolver-typescript: "npm:^3.7.0"
@@ -1182,13 +1179,11 @@ __metadata:
     eslint-plugin-jest: "npm:^28.11.0"
     jest: "npm:^29.7.0"
     prettier: "npm:^3.4.2"
-    react: "npm:^19.0.0"
     sharp: "npm:^0.33.5"
     ts-jest: "npm:^29.2.5"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.3"
     typescript-eslint: "npm:^8.22.0"
-    yoga-layout: "npm:^3.2.1"
   languageName: unknown
   linkType: soft
 
@@ -1311,13 +1306,6 @@ __metadata:
   version: 1.0.6
   resolution: "@types/estree@npm:1.0.6"
   checksum: 10c0/cdfd751f6f9065442cd40957c07fd80361c962869aa853c1c2fd03e101af8b9389d8ff4955a43a6fcfa223dd387a089937f95be0f3eec21ca527039fd2d9859a
-  languageName: node
-  linkType: hard
-
-"@types/floyd-steinberg@npm:^1":
-  version: 1.0.3
-  resolution: "@types/floyd-steinberg@npm:1.0.3"
-  checksum: 10c0/3f787230ded9fb1d31d81ed18906a8a2d93d2c8635022209d3894435087bd5e0a62756a983cb64e9fb891f015286a6100f8b6cc52f9dbc64d339a5a4003d74de
   languageName: node
   linkType: hard
 
@@ -2159,13 +2147,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"canvas-dither@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "canvas-dither@npm:1.0.1"
-  checksum: 10c0/532cfeef9248de3fc0fdbc20e2023dd38b6899826856ef4e63a7cdc4b8863316cd93cb50139dc885f43584b7c59a40f06d4d69b433776efb84c6bcdd1a2a244b
-  languageName: node
-  linkType: hard
-
 "chalk@npm:^2.0.0":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
@@ -2230,13 +2211,6 @@ __metadata:
     strip-ansi: "npm:^6.0.1"
     wrap-ansi: "npm:^7.0.0"
   checksum: 10c0/4bda0f09c340cbb6dfdc1ed508b3ca080f12992c18d68c6be4d9cf51756033d5266e61ec57529e610dacbf4da1c634423b0c1b11037709cc6b09045cbd815df5
-  languageName: node
-  linkType: hard
-
-"clsx@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "clsx@npm:2.1.1"
-  checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
   languageName: node
   linkType: hard
 
@@ -5725,13 +5699,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.0.0":
-  version: 19.0.0
-  resolution: "react@npm:19.0.0"
-  checksum: 10c0/9cad8f103e8e3a16d15cb18a0d8115d8bd9f9e1ce3420310aea381eb42aa0a4f812cf047bb5441349257a05fba8a291515691e3cb51267279b2d2c3253f38471
-  languageName: node
-  linkType: hard
-
 "readable-stream@npm:^3.6.0":
   version: 3.6.0
   resolution: "readable-stream@npm:3.6.0"
@@ -7115,12 +7082,5 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
-  languageName: node
-  linkType: hard
-
-"yoga-layout@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "yoga-layout@npm:3.2.1"
-  checksum: 10c0/9001e51be993c85e03757e5a04a2b61b8b30c9e5a7865d0156ca87a6431a3b717d51eb4990bfe588189fcfeac688dd9c3de707bbd50d1c344a84e63974cc54a8
   languageName: node
   linkType: hard
