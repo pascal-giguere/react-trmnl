@@ -44,7 +44,6 @@
   },
   "dependencies": {
     "bmp-ts": "^1.0.9",
-    "canvas-dither": "^1.0.1",
     "sharp": "^0.33.5"
   }
 }
