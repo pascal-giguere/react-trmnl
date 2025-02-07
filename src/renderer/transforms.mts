@@ -15,8 +15,8 @@ async function grayscale(image: RawImage): Promise<RawBWImage> {
   }
   const { data, width, height, channels } = image;
   const bwData: Buffer = await sharp(data, { raw: { width, height, channels } })
+    .flatten({ background: "white" })
     .toColorspace("b-w")
-    .removeAlpha()
     .raw()
     .toBuffer();
   return { data: bwData, width, height, channels: 1 };
