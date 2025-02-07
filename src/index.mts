@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import { readImage } from "./renderer/dev-utils.mjs";
 import { encodeBMP, encodePNG } from "./renderer/encoding.mjs";
-import { to1Bit } from "./renderer/conversions.mjs";
+import { oneBit } from "./renderer/transforms.mjs";
 
-const inputJpgImage = await readImage("in/rover_rgba.png");
-console.time("to1Bit");
-const dithered = await to1Bit(inputJpgImage, false);
-console.timeEnd("to1Bit");
+const inputJpgImage = await readImage("in/rover_bw.jpg");
+console.time("oneBitImage");
+const dithered = await oneBit(inputJpgImage, true);
+console.timeEnd("oneBitImage");
 console.time("encodeBMP");
 const bmpImage = encodeBMP(dithered);
 console.timeEnd("encodeBMP");
