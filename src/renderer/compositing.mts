@@ -1,17 +1,26 @@
 import sharp from "sharp";
 import { ditherImage, Dithering } from "./dithering.mjs";
-import type { RawImage, RawBWImage } from "./types.mjs";
+import type { RawImage, RawBWImage, RenderingDimensions, RenderingPosition } from "./types.mjs";
+
+type DrawTextOptions = {
+  text: string;
+  dimensions: RenderingDimensions;
+  position?: RenderingPosition;
+  fontSize?: number;
+  fontFamily?: "sans" | "serif" | "monospace";
+  fill?: "black" | "white";
+  stroke?: "black" | "white" | "none";
+  strokeWidth?: number;
+};
 
 type DrawImageOptions = {
   image: RawImage;
-  width: number;
-  height: number;
-  top: number;
-  left: number;
-  dithering: Dithering;
+  dimensions: RenderingDimensions;
+  position?: RenderingPosition;
+  dithering?: Dithering;
 };
 
-type DrawSvgOptions = { svg: string; top: number; left: number };
+type DrawSvgOptions = { svg: string; dimensions: RenderingDimensions; position: RenderingPosition };
 
 export class ImageBuffer {
   readonly width: number;
@@ -24,8 +33,29 @@ export class ImageBuffer {
     this.data = Buffer.alloc(width * height).fill(255);
   }
 
-  async drawSvg({ svg, top, left }: DrawSvgOptions): Promise<void> {
-    const { data: svgData, info: svgInfo } = await sharp(Buffer.from(svg)).raw().toBuffer({ resolveWithObject: true });
+  async drawText({
+    text,
+    dimensions,
+    position = {},
+    fontSize = 24,
+    fontFamily = "sans",
+    fill = "black",
+    stroke = "none",
+    strokeWidth = 5,
+  }: DrawTextOptions): Promise<void> {
+    const svg = `<text y="${fontSize}" fill="${fill}" font-size="${fontSize}" font-family="${fontFamily}" stroke="${stroke}" stroke-width="${strokeWidth}" paint-order="stroke">${text}</text>`;
+    await this.drawSvg({ svg, dimensions, position });
+  }
+
+  async drawSvg({ svg, dimensions, position = {} }: DrawSvgOptions): Promise<void> {
+    const { width, height } = dimensions;
+    const { top = 0, left = 0 } = position;
+
+    const { data: svgData, info: svgInfo } = await sharp(
+      Buffer.from(`<svg width="${width}" height="${height}">${svg}</svg>`),
+    )
+      .raw()
+      .toBuffer({ resolveWithObject: true });
 
     this.data = Buffer.from(
       (
@@ -39,7 +69,10 @@ export class ImageBuffer {
     );
   }
 
-  async drawImage({ image, width, height, top, left, dithering = Dithering.None }: DrawImageOptions): Promise<void> {
+  async drawImage({ image, dimensions, position = {}, dithering = Dithering.None }: DrawImageOptions): Promise<void> {
+    const { width, height } = dimensions;
+    const { top = 0, left = 0 } = position;
+
     const resizedData: Buffer = await sharp(image.data, {
       raw: { width: image.width, height: image.height, channels: image.channels },
     })

@@ -6,3 +6,13 @@ export type RawImage = {
 };
 
 export type RawBWImage = RawImage & { channels: 1 };
+
+export type RenderingDimensions = {
+  width: number;
+  height: number;
+};
+
+export type RenderingPosition = {
+  top?: number;
+  left?: number;
+};
