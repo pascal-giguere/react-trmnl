@@ -1,5 +1,6 @@
 import { encode as bmpEncode, BmpCompression } from "bmp-ts";
 import sharp from "sharp";
+import type { RawBWImage } from "./types.mjs";
 
 export function encodeBMP(image: RawBWImage): Buffer {
   const { data, width, height } = image;

@@ -1,3 +1,5 @@
+import type { RawBWImage } from "./types.mjs";
+
 export enum Dithering {
   None = "none",
   // FloydSteinberg = "floyd-steinberg",

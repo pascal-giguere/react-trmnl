@@ -1,5 +1,6 @@
 import sharp from "sharp";
 import { ditherImage, Dithering } from "./dithering.mjs";
+import type { RawImage, RawBWImage } from "./types.mjs";
 
 type DrawImageOptions = {
   image: RawImage;
@@ -9,6 +10,7 @@ type DrawImageOptions = {
   left: number;
   dithering: Dithering;
 };
+
 type DrawSvgOptions = { svg: string; top: number; left: number };
 
 export class ImageBuffer {
