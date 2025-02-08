@@ -5,7 +5,7 @@
   "author": "Pascal Giguère",
   "homepage": "https://github.com/pascal-giguere/starter-node",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/pascal-giguere/starter-node.git"
