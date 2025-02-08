@@ -1,11 +1,5 @@
-# @pascal-giguere/starter-node
+# trmnl-react
 
-Pascal's starter Node project using:
- - Node 22
- - TypeScript 5
- - Yarn 4 (with PnP)
- - Prettier 3
- - ESLint 9
- - Jest 29
+A Node/React-based BYOS (Build Your Own Server) for https://usetrmnl.com.
 
-Original repository: https://github.com/pascal-giguere/starter-node
+Currently in development.
