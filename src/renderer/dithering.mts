@@ -1,4 +1,19 @@
-export function atkinsonDither(image: RawBWImage): RawBWImage {
+export enum Dithering {
+  None = "none",
+  // FloydSteinberg = "floyd-steinberg",
+  Atkinson = "atkinson",
+}
+
+export function ditherImage(image: RawBWImage, algorithm: Dithering): RawBWImage {
+  switch (algorithm) {
+    case Dithering.Atkinson:
+      return atkinsonDither(image);
+    default:
+      return image;
+  }
+}
+
+function atkinsonDither(image: RawBWImage): RawBWImage {
   const inData = Buffer.from(image.data);
   const outData = Buffer.alloc(image.data.length);
   for (let i = 0; i < inData.length; i++) {
