@@ -1,20 +1,19 @@
 import sharp from "sharp";
-import fs from "node:fs";
-import { encodeBMP, encodePNG } from "./encoding.mjs";
+import { encodeImage, ImageFormat } from "./encoding.mjs";
 import { ImageBuffer } from "./compositing.mjs";
 import { Dithering } from "./dithering.mjs";
-import type { RawImage, RawBWImage } from "./types.mjs";
+import type { RawImage } from "./types.mjs";
 
 async function readImage(path: string): Promise<RawImage> {
   const { data, info } = await sharp(path).raw().toBuffer({ resolveWithObject: true });
   return { data, width: info.width, height: info.height, channels: info.channels };
 }
 
-export async function testCompositing(): Promise<void> {
+export async function testCompositing(width: number, height: number, imageFormat: ImageFormat): Promise<Buffer> {
   const inputImage = await readImage("in/rover_rgb.jpg");
 
-  console.time("testCompositing");
-  const imageBuffer = new ImageBuffer({ width: 800, height: 480 });
+  console.time("Compositing");
+  const imageBuffer = new ImageBuffer({ width, height });
 
   await imageBuffer.drawSvg({
     svg: "<circle r='100' cx='100' cy='100' fill='black' />",
@@ -44,10 +43,7 @@ export async function testCompositing(): Promise<void> {
     stroke: "white",
   });
 
-  const rawImage: RawBWImage = imageBuffer.toRawImage();
-  const pngImage = await encodePNG(rawImage);
-  fs.writeFileSync("out/compositing.png", pngImage);
-  const bmpImage = encodeBMP(rawImage);
-  fs.writeFileSync("out/compositing.bmp", bmpImage);
-  console.timeEnd("testCompositing");
+  console.timeEnd("Compositing");
+
+  return encodeImage(imageBuffer.toRawImage(), imageFormat);
 }
