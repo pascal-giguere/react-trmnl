@@ -6,6 +6,7 @@ export async function getPreview(_: FastifyRequest, rep: FastifyReply): Promise<
   const pngFile: Buffer = await testCompositing(800, 480, ImageFormat.PNG);
   rep
     .headers({
+      "Cache-Control": "no-cache",
       "Content-Type": "image/png",
       "Content-Length": pngFile.length.toString(),
     })
