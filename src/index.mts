@@ -14,7 +14,7 @@ try {
   await server.listen({ host, port });
   const address = server.server.address() as AddressInfo;
   console.log(`trmnl-react server listening on port ${address.port}`);
-  console.log(`Preview at http://localhost:${address.port}/api/preview`);
+  console.log(`Preview at http://${host}:${address.port}/api/preview`);
 } catch (err) {
   server.log.error(err);
   process.exit(1);

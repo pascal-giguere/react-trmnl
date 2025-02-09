@@ -1,5 +1,6 @@
 import sharp from "sharp";
 import { ditherImage, Dithering } from "./dithering.mjs";
+import { DefaultFont, VectorFont } from "./fonts.mjs";
 import type { RawImage, RawBWImage, RenderingDimensions, RenderingPosition } from "./types.mjs";
 
 type DrawTextOptions = {
@@ -7,7 +8,7 @@ type DrawTextOptions = {
   dimensions: RenderingDimensions;
   position?: RenderingPosition;
   fontSize?: number;
-  fontFamily?: "sans" | "serif" | "monospace";
+  fontFamily?: DefaultFont | VectorFont;
   fill?: "black" | "white";
   stroke?: "black" | "white" | "none";
   strokeWidth?: number;
@@ -38,12 +39,14 @@ export class ImageBuffer {
     dimensions,
     position = {},
     fontSize = 24,
-    fontFamily = "sans",
+    fontFamily = DefaultFont.Sans,
     fill = "black",
     stroke = "none",
-    strokeWidth = 5,
+    strokeWidth = fontSize / 10,
   }: DrawTextOptions): Promise<void> {
-    const svg = `<text y="${fontSize}" fill="${fill}" font-size="${fontSize}" font-family="${fontFamily}" stroke="${stroke}" stroke-width="${strokeWidth}" paint-order="stroke">${text}</text>`;
+    const svg =
+      `<text y="${fontSize}" fill="${fill}" font-size="${fontSize}" font-family="${fontFamily}" ` +
+      `stroke="${stroke}" stroke-width="${strokeWidth}" paint-order="stroke">${text}</text>`;
     await this.drawSvg({ svg, dimensions, position });
   }
 

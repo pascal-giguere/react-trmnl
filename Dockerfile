@@ -1,4 +1,8 @@
-FROM node:22.13-alpine
+FROM node:22.13-slim
+
+COPY --chown=node:node --chmod=755 assets/fonts/ usr/local/share/fonts/
+RUN apt-get update; apt-get install -y fontconfig
+RUN fc-cache -f -v
 
 # Set up working directory for `node` non-root user
 USER node

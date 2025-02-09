@@ -1,9 +1,13 @@
+process.env.FC_DEBUG = "1024";
+process.env.PANGOCAIRO_BACKEND = "fontconfig";
+
 import { join } from "node:path";
 import sharp from "sharp";
 import { encodeImage, ImageFormat } from "./encoding.mjs";
 import { ImageBuffer } from "./compositing.mjs";
 import { Dithering } from "./dithering.mjs";
 import type { RawImage } from "./types.mjs";
+import { VectorFont } from "./fonts.mjs";
 
 const inputImage = await readImage(join(process.cwd(), "/assets/images/rover_rgb.jpg"));
 
@@ -40,7 +44,7 @@ export async function testCompositing(width: number, height: number, imageFormat
     dimensions: { width: 500, height: 100 },
     position: { top: 297, left: 430 },
     fontSize: 28,
-    fontFamily: "sans",
+    fontFamily: VectorFont.EBGaramond,
     stroke: "white",
   });
 
