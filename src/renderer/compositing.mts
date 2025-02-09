@@ -28,7 +28,7 @@ export class ImageBuffer {
   readonly height: number;
   private data: Buffer;
 
-  constructor({ width, height }: { width: number; height: number }) {
+  constructor({ width, height }: RenderingDimensions) {
     this.width = width;
     this.height = height;
     this.data = Buffer.alloc(width * height).fill(255);

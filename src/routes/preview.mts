@@ -1,9 +1,11 @@
-import type { FastifyRequest, FastifyReply } from "fastify";
-import { testCompositing } from "../renderer/dev-utils.mjs";
-import { ImageFormat } from "../renderer/encoding.mjs";
+import type { FastifyReply, FastifyRequest } from "fastify";
+import { encodeImage, ImageFormat } from "../renderer/encoding.mjs";
+import type { RawBWImage } from "../renderer/types.mjs";
+import { renderReact } from "../renderer/react.js";
 
 export async function getPreview(_: FastifyRequest, rep: FastifyReply): Promise<void> {
-  const pngFile: Buffer = await testCompositing(800, 480, ImageFormat.PNG);
+  const image: RawBWImage = await renderReact();
+  const pngFile: Buffer = await encodeImage(image, ImageFormat.PNG);
   rep
     .headers({
       "Cache-Control": "no-cache",

@@ -1,12 +1,11 @@
-process.env.FC_DEBUG = "1024";
+// process.env.FC_DEBUG = "1024";
 process.env.PANGOCAIRO_BACKEND = "fontconfig";
 
 import { join } from "node:path";
 import sharp from "sharp";
-import { encodeImage, ImageFormat } from "./encoding.mjs";
 import { ImageBuffer } from "./compositing.mjs";
 import { Dithering } from "./dithering.mjs";
-import type { RawImage } from "./types.mjs";
+import type { RawBWImage, RawImage } from "./types.mjs";
 import { VectorFont } from "./fonts.mjs";
 
 const inputImage = await readImage(join(process.cwd(), "/assets/images/rover_rgb.jpg"));
@@ -16,9 +15,8 @@ async function readImage(path: string): Promise<RawImage> {
   return { data, width: info.width, height: info.height, channels: info.channels };
 }
 
-export async function testCompositing(width: number, height: number, imageFormat: ImageFormat): Promise<Buffer> {
+export async function testCompositing(imageBuffer: ImageBuffer): Promise<RawBWImage> {
   console.time("Compositing");
-  const imageBuffer = new ImageBuffer({ width, height });
 
   await imageBuffer.drawSvg({
     svg: "<circle r='100' cx='100' cy='100' fill='black' />",
@@ -50,5 +48,5 @@ export async function testCompositing(width: number, height: number, imageFormat
 
   console.timeEnd("Compositing");
 
-  return encodeImage(imageBuffer.toRawImage(), imageFormat);
+  return imageBuffer.toRawImage();
 }
