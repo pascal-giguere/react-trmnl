@@ -1,7 +1,7 @@
 {
   "name": "react-trmnl",
   "description": "A React-based renderer for TRMNL (https://usetrmnl.com)",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Pascal Giguère",
   "homepage": "https://github.com/pascal-giguere/react-trmnl",
   "license": "ISC",
@@ -18,8 +18,7 @@
   },
   "main": "dist/index.mjs",
   "files": [
-    "dist/**/*",
-    "assets/**/*"
+    "dist/**/*"
   ],
   "scripts": {
     "build": "yarn clean && tsc",
@@ -45,15 +44,11 @@
     "prettier": "^3.4.2",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "tsc-watch": "6.2.1",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.22.0"
   },
   "dependencies": {
     "bmp-ts": "^1.0.9",
-    "env-var": "^7.5.0",
-    "fastify": "^5.2.1",
-    "react": "^19.0.0",
     "react-reconciler": "^0.31.0",
     "sharp": "^0.32.6"
   }

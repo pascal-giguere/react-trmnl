@@ -5,6 +5,7 @@ import type { RawBWImage } from "./types.mjs";
 export enum ImageFormat {
   BMP = "bmp",
   PNG = "png",
+  Raw = "raw",
 }
 
 export async function encodeImage(image: RawBWImage, format: ImageFormat): Promise<Buffer> {
@@ -13,6 +14,8 @@ export async function encodeImage(image: RawBWImage, format: ImageFormat): Promi
       return encodeBMP(image);
     case ImageFormat.PNG:
       return encodePNG(image);
+    case ImageFormat.Raw:
+      return image.data;
   }
 }
 
