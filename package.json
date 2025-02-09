@@ -1,6 +1,6 @@
 {
   "name": "trmnl-react",
-  "description": "A Node/React-based BYOS (Build Your Own Server) for https://usetrmnl.com",
+  "description": "A React-based renderer for TRMNL (https://usetrmnl.com)",
   "version": "0.1.0",
   "author": "Pascal Giguère",
   "homepage": "https://github.com/pascal-giguere/trmnl-react",
