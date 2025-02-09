@@ -1,14 +1,10 @@
 {
-  "name": "trmnl-react",
-  "description": "A React-based renderer for TRMNL (https://usetrmnl.com)",
+  "name": "trmnl-react-example",
+  "description": "An example Node project using trmnl-react for rendering",
   "version": "0.1.0",
   "author": "Pascal Giguère",
   "homepage": "https://github.com/pascal-giguere/trmnl-react",
   "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pascal-giguere/trmnl-react.git"
-  },
   "type": "module",
   "packageManager": "yarn@4.6.0",
   "engines": {
@@ -17,44 +13,29 @@
     "yarn": "4.6.0"
   },
   "main": "dist/index.mjs",
-  "files": [
-    "dist/**/*",
-    "assets/**/*"
-  ],
   "scripts": {
-    "build": "yarn clean && tsc",
-    "clean": "rm -rf dist",
-    "test": "jest",
-    "publish": "yarn npm publish",
-    "prepack": "yarn && yarn build"
+    "dev": "tsc-watch --onSuccess \"yarn serve\"",
+    "build": "tsc",
+    "serve": "node ."
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@types/jest": "^29.5.14",
     "@types/node": "^22.13.0",
     "@types/react": "^19.0.8",
-    "@types/react-reconciler": "^0.28.9",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jest": "^28.11.0",
-    "jest": "^29.7.0",
     "prettier": "^3.4.2",
-    "ts-jest": "^29.2.5",
-    "ts-node": "^10.9.2",
     "tsc-watch": "6.2.1",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.22.0"
   },
   "dependencies": {
-    "bmp-ts": "^1.0.9",
     "env-var": "^7.5.0",
     "fastify": "^5.2.1",
-    "react": "^19.0.0",
-    "react-reconciler": "^0.31.0",
-    "sharp": "^0.32.6"
+    "react": "^19.0.0"
   }
 }
