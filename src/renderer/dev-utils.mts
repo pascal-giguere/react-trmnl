@@ -1,8 +1,11 @@
+import { join } from "node:path";
 import sharp from "sharp";
 import { encodeImage, ImageFormat } from "./encoding.mjs";
 import { ImageBuffer } from "./compositing.mjs";
 import { Dithering } from "./dithering.mjs";
 import type { RawImage } from "./types.mjs";
+
+const inputImage = await readImage(join(process.cwd(), "/assets/images/rover_rgb.jpg"));
 
 async function readImage(path: string): Promise<RawImage> {
   const { data, info } = await sharp(path).raw().toBuffer({ resolveWithObject: true });
@@ -10,8 +13,6 @@ async function readImage(path: string): Promise<RawImage> {
 }
 
 export async function testCompositing(width: number, height: number, imageFormat: ImageFormat): Promise<Buffer> {
-  const inputImage = await readImage("in/rover_rgb.jpg");
-
   console.time("Compositing");
   const imageBuffer = new ImageBuffer({ width, height });
 
@@ -22,24 +23,24 @@ export async function testCompositing(width: number, height: number, imageFormat
   });
 
   await imageBuffer.drawSvg({
-    svg: "<rect width='200' height='100' fill='black' />",
-    dimensions: { width: 200, height: 100 },
-    position: { top: 150, left: 300 },
+    svg: "<rect width='300' height='180' fill='black' />",
+    dimensions: { width: 300, height: 180 },
+    position: { top: 170, left: 430 },
   });
 
   await imageBuffer.drawImage({
     image: inputImage,
     dimensions: { width: 300, height: 180 },
-    position: { top: 280, left: 420 },
+    position: { top: 160, left: 420 },
     dithering: Dithering.Atkinson,
   });
 
   await imageBuffer.drawText({
     text: "My cat is grumpy",
     dimensions: { width: 500, height: 100 },
-    position: { top: 300, left: 50 },
-    fontSize: 50,
-    fontFamily: "monospace",
+    position: { top: 297, left: 430 },
+    fontSize: 28,
+    fontFamily: "sans",
     stroke: "white",
   });
 

@@ -12,6 +12,7 @@ RUN yarn install
 
 # Copy source code and build project
 COPY --chown=node:node src/ src/
+COPY --chown=node:node assets/ assets/
 COPY --chown=node:node tsconfig.json ./
 RUN yarn build
 
