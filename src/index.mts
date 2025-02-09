@@ -4,15 +4,17 @@ import env from "env-var";
 import Fastify, { type FastifyInstance } from "fastify";
 import { routes } from "./routes/routes.mjs";
 
-const serverPort: number = env.get("PORT").default("3000").asPortNumber();
+const host: string = env.get("HOST").default("localhost").asString();
+const port: number = env.get("PORT").default("3000").asPortNumber();
+
 const server: FastifyInstance = Fastify();
 server.register(routes, { prefix: "/api" });
 
 try {
-  await server.listen({ port: serverPort });
-  const port: number = (server.server.address() as AddressInfo).port;
-  console.log(`trmnl-react server listening on port ${port}`);
-  console.log(`Preview at http://localhost:${port}/api/preview`);
+  await server.listen({ host, port });
+  const address = server.server.address() as AddressInfo;
+  console.log(`trmnl-react server listening on port ${address.port}`);
+  console.log(`Preview at http://localhost:${address.port}/api/preview`);
 } catch (err) {
   server.log.error(err);
   process.exit(1);

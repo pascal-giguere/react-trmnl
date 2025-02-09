@@ -16,6 +16,7 @@ COPY --chown=node:node tsconfig.json ./
 RUN yarn build
 
 # Run container on specified port
+ENV HOST=0.0.0.0
 ENV PORT=3000
 EXPOSE $PORT
 CMD ["yarn", "serve"]
