@@ -6,8 +6,8 @@ RUN fc-cache -f -v
 
 # Set up working directory for `node` non-root user
 USER node
-RUN mkdir -p /home/node/trmnl-react/ && chown -R node:node /home/node/
-WORKDIR /home/node/trmnl-react/
+RUN mkdir -p /home/node/react-trmnl/ && chown -R node:node /home/node/
+WORKDIR /home/node/react-trmnl/
 
 # Install dependencies as a first step to leverage Docker layer caching
 COPY --chown=node:node ../.yarn/releases/ .yarn/releases/

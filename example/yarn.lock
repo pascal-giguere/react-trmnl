@@ -2738,9 +2738,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"trmnl-react-example@workspace:.":
+"react-trmnl-example@workspace:.":
   version: 0.0.0-use.local
-  resolution: "trmnl-react-example@workspace:."
+  resolution: "react-trmnl-example@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.19.0"
     "@types/node": "npm:^22.13.0"

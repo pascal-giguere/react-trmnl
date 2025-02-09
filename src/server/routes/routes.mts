@@ -7,5 +7,5 @@ export const routes = (instance: FastifyInstance): void => {
 };
 
 function getRoot(_: FastifyRequest, rep: FastifyReply): void {
-  rep.send({ message: "trmnl-react API" });
+  rep.send({ message: "react-trmnl API" });
 }

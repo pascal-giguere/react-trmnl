@@ -1,4 +1,4 @@
-# trmnl-react
+# react-trmnl
 
 A React-based renderer for TRMNL (https://usetrmnl.com)
 
