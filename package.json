@@ -4,7 +4,6 @@
   "version": "0.1.0",
   "author": "Pascal Giguère",
   "homepage": "https://github.com/pascal-giguere/trmnl-react",
-  "private": true,
   "license": "ISC",
   "repository": {
     "type": "git",
