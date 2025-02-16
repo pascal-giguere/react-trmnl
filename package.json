@@ -51,5 +51,8 @@
     "bmp-ts": "^1.0.9",
     "react-reconciler": "^0.31.0",
     "sharp": "^0.32.6"
+  },
+  "peerDependencies": {
+    "react": "19"
   }
 }

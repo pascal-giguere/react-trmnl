@@ -37,6 +37,9 @@
     "env-var": "^7.5.0",
     "fastify": "^5.2.1",
     "react": "^19.0.0",
-    "react-trmnl": "^0.1.1"
+    "react-trmnl": "*"
+  },
+  "resolutions": {
+    "react-trmnl": "portal:.."
   }
 }
