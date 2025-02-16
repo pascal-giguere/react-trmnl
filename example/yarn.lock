@@ -110,21 +110,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.13.0":
-  version: 22.13.1
-  resolution: "@types/node@npm:22.13.1"
+"@types/node@npm:^22.13.4":
+  version: 22.13.4
+  resolution: "@types/node@npm:22.13.4"
   dependencies:
     undici-types: "npm:~6.20.0"
-  checksum: 10c0/d4e56d41d8bd53de93da2651c0a0234e330bd7b1b6d071b1a94bd3b5ee2d9f387519e739c52a15c1faa4fb9d97e825b848421af4b2e50e6518011e7adb4a34b7
+  checksum: 10c0/3a234fa7766a3efc382cf81f66f474c26cdab2f54f43f757634c81c0444eb2160c2dabbde9741e4983078a318a88515b65416b5f1ab5478548579d7b3ead1d95
   languageName: node
   linkType: hard
 
-"@types/react@npm:^19.0.8":
-  version: 19.0.8
-  resolution: "@types/react@npm:19.0.8"
+"@types/react@npm:^19.0.9":
+  version: 19.0.9
+  resolution: "@types/react@npm:19.0.9"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10c0/5fa7236356b1476de03519c66ef65d4fd904826956105619e2ad60cb0b55ae7b251dd5fff02234076225b5e15333d0d936bf9dbe1d461406f8a2ba01c197ddcd
+  checksum: 10c0/a0324890a7d9f3bae018b8735c8978cebea35bc00e7e5cdfcead110683a3b95aab550606abb2fe3189215d60dfcf7059335d206a5f20f41868c56daef60f62c1
   languageName: node
   linkType: hard
 
@@ -1218,12 +1218,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.4.2":
-  version: 3.5.0
-  resolution: "prettier@npm:3.5.0"
+"prettier@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "prettier@npm:3.5.1"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/6c355d74c377f5622953229d92477e8b9779162e848db90fd7e06c431deb73585d31fafc4516cf5868917825b97b9ec7c87c8d8b8e03ccd9fc9c0b7699d1a650
+  checksum: 10c0/9f6f810eae455d6e4213845151a484a2338f2e0d6a8b84ee8e13a83af8a2421ef6c1e31e61e4b135671fb57b9541f6624648880cc2061ac803e243ac898c0123
   languageName: node
   linkType: hard
 
@@ -1308,13 +1308,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-trmnl-example@workspace:."
   dependencies:
-    "@types/node": "npm:^22.13.0"
-    "@types/react": "npm:^19.0.8"
+    "@types/node": "npm:^22.13.4"
+    "@types/react": "npm:^19.0.9"
     fastify: "npm:^5.2.1"
-    prettier: "npm:^3.4.2"
+    prettier: "npm:^3.5.1"
     react: "npm:^19.0.0"
     react-trmnl: "npm:*"
-    tsc-watch: "npm:6.2.1"
+    tsc-watch: "npm:6.3.0"
     typescript: "npm:^5.7.3"
   languageName: unknown
   linkType: soft
@@ -1790,9 +1790,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsc-watch@npm:6.2.1":
-  version: 6.2.1
-  resolution: "tsc-watch@npm:6.2.1"
+"tsc-watch@npm:6.3.0":
+  version: 6.3.0
+  resolution: "tsc-watch@npm:6.3.0"
   dependencies:
     cross-spawn: "npm:^7.0.3"
     node-cleanup: "npm:^2.1.2"
@@ -1802,7 +1802,7 @@ __metadata:
     typescript: "*"
   bin:
     tsc-watch: dist/lib/tsc-watch.js
-  checksum: 10c0/f5fe19e5ac9f4c42a5600c20aee9ff49e282f11813aead65ed58fa11d98a20f5a82bf4f931897270f49f6475dd54e9aab9c46a07c3801b8d237dfbe77bcf1bfc
+  checksum: 10c0/7fca4ddcb96dced095391f218a4b9d27b0046213639fc8f8133492b46d2c1b4dc797719bf4b3239cfe54a1e95c6730122467ef35b4055d2ba6cb231950c2fd54
   languageName: node
   linkType: hard
 
