@@ -4,7 +4,7 @@ import Fastify from "fastify";
 import { renderApp } from "./App.js";
 
 const host: string = process.env.HOST ?? "localhost";
-const port: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const port: number = Number.isInteger(process.env.PORT) ? Number(process.env.PORT) : 3000;
 
 const server = Fastify();
 
