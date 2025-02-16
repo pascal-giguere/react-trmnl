@@ -1313,7 +1313,7 @@ __metadata:
     fastify: "npm:^5.2.1"
     prettier: "npm:^3.5.1"
     react: "npm:^19.0.0"
-    react-trmnl: "npm:*"
+    react-trmnl: "portal:.."
     tsc-watch: "npm:6.3.0"
     typescript: "npm:^5.7.3"
   languageName: unknown

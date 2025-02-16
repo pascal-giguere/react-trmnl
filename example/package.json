@@ -28,9 +28,6 @@
   "dependencies": {
     "fastify": "^5.2.1",
     "react": "^19.0.0",
-    "react-trmnl": "*"
-  },
-  "resolutions": {
     "react-trmnl": "portal:.."
   }
 }
