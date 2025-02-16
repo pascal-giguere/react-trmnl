@@ -1127,13 +1127,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"env-var@npm:^7.5.0":
-  version: 7.5.0
-  resolution: "env-var@npm:7.5.0"
-  checksum: 10c0/7eb93446417b2a1caaec213ffa1a28686a23d18f9364c9c007c113bedabf4632f8890a95b23022f3ac59351807f8ed27fce3ea68f85462406d7d19b2f6c75e88
-  languageName: node
-  linkType: hard
-
 "err-code@npm:^2.0.2":
   version: 2.0.3
   resolution: "err-code@npm:2.0.3"
@@ -3065,7 +3058,6 @@ __metadata:
     "@types/react": "npm:^19.0.8"
     "@typescript-eslint/eslint-plugin": "npm:^8.22.0"
     "@typescript-eslint/parser": "npm:^8.22.0"
-    env-var: "npm:^7.5.0"
     eslint: "npm:^9.19.0"
     eslint-config-prettier: "npm:^10.0.1"
     eslint-import-resolver-typescript: "npm:^3.7.0"

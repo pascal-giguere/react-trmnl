@@ -5691,6 +5691,8 @@ __metadata:
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.3"
     typescript-eslint: "npm:^8.22.0"
+  peerDependencies:
+    react: 19
   languageName: unknown
   linkType: soft
 
