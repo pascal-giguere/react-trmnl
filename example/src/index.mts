@@ -2,7 +2,7 @@ import process from "node:process";
 import type { AddressInfo } from "net";
 import env from "env-var";
 import Fastify from "fastify";
-import { renderPNG } from "./App.js";
+import { renderApp } from "./App.js";
 
 const host: string = env.get("HOST").default("localhost").asString();
 const port: number = env.get("PORT").default("3000").asPortNumber();
@@ -11,7 +11,7 @@ const server = Fastify();
 
 server.get("/", (_, rep) => rep.send({ message: "react-trmnl API" }));
 server.get("/preview", async (_, rep) => {
-  const png: Buffer = await renderPNG();
+  const png: Buffer = await renderApp();
   rep
     .headers({
       "Cache-Control": "no-cache",
