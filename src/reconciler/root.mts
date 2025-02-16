@@ -19,8 +19,11 @@ export class ReconcilerRoot {
   async render(element: ReactNode): Promise<OpaqueRoot> {
     console.log("Root.render");
     await testCompositing(this.buffer);
-    return reconciler.updateContainer(element, this.rootContainer, null, () => {
-      console.log("reconciler.updateContainer");
+    return new Promise((resolve) => {
+      reconciler.updateContainer(element, this.rootContainer, null, () => {
+        console.log("reconciler.updateContainer");
+        resolve(this.rootContainer);
+      });
     });
   }
 
