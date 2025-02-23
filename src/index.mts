@@ -8,13 +8,13 @@ export type RenderOptions = {
   width: number;
   height: number;
   format: ImageFormat;
-}
+};
 
 const defaultOpts: RenderOptions = {
   width: 800,
   height: 480,
-  format: ImageFormat.PNG
-}
+  format: ImageFormat.PNG,
+};
 
 export async function render(element: ReactElement, opts: RenderOptions = defaultOpts): Promise<Buffer> {
   const { width, height, format } = opts;

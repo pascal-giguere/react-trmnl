@@ -23,7 +23,7 @@
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "rm -rf dist",
-    "test": "jest",
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest) -c ./test/unit/jest.config.mjs",
     "publish": "yarn npm publish",
     "prepack": "yarn && yarn build"
   },
@@ -42,7 +42,9 @@
     "eslint-plugin-jest": "^28.11.0",
     "jest": "^29.7.0",
     "prettier": "^3.4.2",
+    "react": "^19.0.0",
     "ts-jest": "^29.2.5",
+    "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.22.0"
