@@ -1,6 +1,5 @@
 import { type ReactNode } from "react";
 import { ImageBuffer } from "../renderer/compositing.mjs";
-import { testCompositing } from "../renderer/dev-utils.mjs";
 import type { RawBWImage, RenderingDimensions } from "../renderer/types.mjs";
 import { hostConfig, type ReconcilerHostConfig } from "./host-config.mjs";
 import ReactReconciler, { type OpaqueRoot } from "react-reconciler";
@@ -16,14 +15,9 @@ export class ReconcilerRoot {
     this.buffer = new ImageBuffer(dimensions);
   }
 
-  async render(element: ReactNode): Promise<OpaqueRoot> {
-    console.log("Root.render");
-    await testCompositing(this.buffer);
+  async render(element: ReactNode): Promise<void> {
     return new Promise((resolve) => {
-      reconciler.updateContainer(element, this.rootContainer, null, () => {
-        console.log("reconciler.updateContainer");
-        resolve(this.rootContainer);
-      });
+      reconciler.updateContainer(element, this.rootContainer, null, () => resolve());
     });
   }
 

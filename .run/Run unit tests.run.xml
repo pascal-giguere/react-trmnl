@@ -6,7 +6,9 @@
       <script value="test" />
     </scripts>
     <node-interpreter value="project" />
-    <envs />
+    <envs>
+      <env name="NODE_NO_WARNINGS" value="1" />
+    </envs>
     <method v="2" />
   </configuration>
 </component>
