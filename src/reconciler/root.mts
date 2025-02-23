@@ -21,11 +21,9 @@ export class ReconcilerRoot {
     await testCompositing(this.buffer);
     return new Promise((resolve) => {
       reconciler.updateContainer(element, this.rootContainer, null, () => {
-        // TODO use callback
         console.log("reconciler.updateContainer");
-        // resolve(this.rootContainer);
+        resolve(this.rootContainer);
       });
-      resolve(this.rootContainer);
     });
   }
 
