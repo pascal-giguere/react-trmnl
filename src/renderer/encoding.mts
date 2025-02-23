@@ -3,9 +3,9 @@ import sharp from "sharp";
 import type { RawBWImage } from "./types.mjs";
 
 export enum ImageFormat {
-  BMP = "bmp",
-  PNG = "png",
-  Raw = "raw",
+  BMP = "bmp", // Uncompressed, 1-channel, 1-bit
+  PNG = "png", // Compressed, 1-channel, 1-bit
+  Raw = "raw", // Uncompressed, 1-channel, 8-bit
 }
 
 export async function encodeImage(image: RawBWImage, format: ImageFormat): Promise<Buffer> {
