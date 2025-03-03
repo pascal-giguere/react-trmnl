@@ -1,6 +1,6 @@
 import { DefaultEventPriority } from "react-reconciler/constants.js";
 import type { ReconcilerRoot } from "./root.mjs";
-import { ReconcilerNode } from "./nodes.mjs";
+import { ReconcilerImageNode, ReconcilerSvgNode, ReconcilerTextNode } from "./nodes.mjs";
 import type {
   HostContext,
   ReconcilerHostConfig,
@@ -9,7 +9,12 @@ import type {
   InstanceType,
   Props,
   UpdatePayload,
+  SvgProps,
+  TextProps,
+  ImageProps,
 } from "./types.mjs";
+import type { OpaqueHandle } from "react-reconciler";
+import type { RawImage } from "../renderer/types.mjs";
 
 let updatePriority: number = DefaultEventPriority;
 const rootHostContext: HostContext = {};
@@ -18,9 +23,9 @@ const childHostContext: HostContext = {};
 export const host: ReconcilerHostConfig = {
   supportsMutation: true,
   shouldSetTextContent(_type: InstanceType, _props: Props): boolean {
-    return false;
+    return true;
   },
-  // @ts-expect-error - Missing from type definitions
+  // Missing from type definitions
   maySuspendCommit(_type: InstanceType, _props: Props): boolean {
     return false;
   },
@@ -37,80 +42,96 @@ export const host: ReconcilerHostConfig = {
   createInstance: (
     type: InstanceType,
     props: Props,
-    rootContainer: ReconcilerRoot,
-    currentHostContext: HostContext,
+    _rootContainer: ReconcilerRoot,
+    _currentHostContext: HostContext,
   ): Instance => {
-    console.log("createInstance", type, props, rootContainer, currentHostContext);
-    return new ReconcilerNode();
+    // TODO Finish implementing
+    switch (type) {
+      case "svg": {
+        const svgProps = props as SvgProps;
+        return new ReconcilerSvgNode(svgProps.children, {
+          position: { top: 0, left: 0 },
+          dimensions: { width: 400, height: 100 },
+        });
+      }
+      case "text": {
+        const textProps = props as TextProps;
+        return new ReconcilerTextNode(
+          textProps.children,
+          {
+            position: { top: 0, left: 0 },
+            dimensions: { width: 400, height: 100 },
+          },
+          {},
+        );
+      }
+      case "image": {
+        const imageProps = props as ImageProps;
+        // TODO: Load image from src
+        const image: RawImage = { data: Buffer.alloc(0), width: 0, height: 0, channels: 1 };
+        return new ReconcilerImageNode(image, imageProps.dithering, {
+          position: { top: 0, left: 0 },
+          dimensions: { width: 400, height: 100 },
+        });
+      }
+      default:
+        throw new Error(`Unsupported instance type: ${type}`);
+    }
   },
   createTextInstance: (
-    text: string,
+    _text: string,
     _rootContainer: ReconcilerRoot,
     _hostContext: HostContext,
     _internalInstanceHandle,
   ): TextInstance => {
-    return new ReconcilerNode(text);
+    throw new Error("Unsupported text instance");
   },
   appendInitialChild: (parent: Instance, child: Instance): void => {
-    console.log("appendInitialChild", parent, child);
     parent.appendChild(child);
   },
   appendChild(parent: Instance, child: Instance): void {
-    console.log("appendChild", parent, child);
     parent.appendChild(child);
   },
   removeChild(parent: Instance, child: Instance): void {
-    console.log("removeChild", parent, child);
     parent.removeChild(child);
   },
+  // @ts-expect-error - Incorrect type definitions, rootContainer is not in params
   finalizeInitialChildren: (
-    instance: Instance,
-    type: InstanceType,
-    props: Props,
-    rootContainer: ReconcilerRoot,
-    hostContext: HostContext,
+    _instance: Instance,
+    _type: InstanceType,
+    _props: Props,
+    _hostContext: HostContext,
   ): boolean => {
-    // TODO Looks like the signature is wrong and rootContainer is not actually in params
-    console.log("finalizeInitialChildren", instance, type, props, rootContainer, hostContext);
     return false;
   },
   appendChildToContainer: (container: ReconcilerRoot, child: Instance): void => {
-    console.log("appendChildToContainer1", container, child);
     container.setRootNode(child);
   },
   prepareUpdate(
-    instance: Instance,
-    type: InstanceType,
-    oldProps: Props,
-    newProps: Props,
-    rootContainer: ReconcilerRoot,
-    hostContext: HostContext,
+    _instance: Instance,
+    _type: InstanceType,
+    _oldProps: Props,
+    _newProps: Props,
+    _rootContainer: ReconcilerRoot,
+    _hostContext: HostContext,
   ): UpdatePayload {
-    console.log("prepareUpdate", instance, type, oldProps, newProps, rootContainer, hostContext);
     return true;
   },
-  prepareForCommit: (containerInfo: ReconcilerRoot) => {
-    console.log("prepareForCommit", containerInfo);
+  prepareForCommit: (_containerInfo: ReconcilerRoot) => {
     return null;
   },
   commitUpdate(
-    instance: Instance,
-    updatePayload: UpdatePayload,
-    type: InstanceType,
-    oldProps: Props,
-    newProps: Props,
-    internalInstanceHandle,
-  ): void {
-    console.log("commitUpdate", instance, updatePayload, type, oldProps, newProps, internalInstanceHandle);
-  },
-  commitTextUpdate(textInstance: TextInstance, oldText: string, newText: string): void {
-    console.log("commitTextUpdate", textInstance, oldText, newText);
-  },
-  resetAfterCommit: (containerInfo: ReconcilerRoot): void => {
-    console.log("resetAfterCommit", containerInfo);
-  },
+    _instance: Instance,
+    _updatePayload: UpdatePayload,
+    _type: InstanceType,
+    _oldProps: Props,
+    _newProps: Props,
+    _internalInstanceHandle: OpaqueHandle,
+  ): void {},
+  commitTextUpdate(_textInstance: TextInstance, _oldText: string, _newText: string): void {},
+  resetAfterCommit: (_containerInfo: ReconcilerRoot): void => {},
   clearContainer(container: ReconcilerRoot): void {
-    console.log("clearContainer", container);
+    container.clearBuffer();
   },
   // Missing from type definitions
   resolveUpdatePriority(): number {

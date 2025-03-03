@@ -21,7 +21,7 @@ type DrawImageOptions = {
   dithering?: Dithering;
 };
 
-type DrawSvgOptions = { svg: string; dimensions: RenderingDimensions; position: RenderingPosition };
+type DrawSvgOptions = { svg: string; dimensions: RenderingDimensions; position?: RenderingPosition };
 
 export class ImageBuffer {
   readonly width: number;
@@ -89,6 +89,10 @@ export class ImageBuffer {
       .composite([{ input: data, raw: { width, height, channels: 1 }, top, left }])
       .toColourspace("b-w")
       .toBuffer();
+  }
+
+  clear(): void {
+    this.data.fill(255);
   }
 
   toRawImage(): RawBWImage {

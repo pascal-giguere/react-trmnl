@@ -31,6 +31,9 @@ export class ReconcilerRoot {
   async render(element: ReactNode): Promise<void> {
     return new Promise((resolve) => {
       reconciler.updateContainer(element, this.rootContainer, null, async () => {
+        if (!this.rootNode) {
+          throw new Error("Root node not set");
+        }
         await this.drawNode(this.rootNode);
         resolve();
       });
@@ -41,22 +44,17 @@ export class ReconcilerRoot {
     this.rootNode = node;
   }
 
+  clearBuffer(): void {
+    this.buffer.clear();
+  }
+
   getRawImage(): RawBWImage {
     return this.buffer.toRawImage();
   }
 
-  private async drawNode(node: ReconcilerNode | null): Promise<void> {
-    if (!node) {
-      throw new Error("Root node not set");
-    }
+  private async drawNode(node: ReconcilerNode): Promise<void> {
+    await node.draw(this.buffer);
 
-    if (node.content) {
-      await this.buffer.drawText({
-        text: node.content,
-        dimensions: { width: 500, height: 100 },
-        fontSize: 28,
-      });
-    }
     for (const child of node.children) {
       await this.drawNode(child);
     }
