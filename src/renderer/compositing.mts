@@ -53,6 +53,7 @@ export class ImageBuffer {
   async drawSvg({ svg, dimensions, position = {} }: DrawSvgOptions): Promise<void> {
     const { width, height } = dimensions;
     const { top = 0, left = 0 } = position;
+    if (width === 0 || height === 0) return;
 
     const { data: svgData, info: svgInfo } = await sharp(
       Buffer.from(`<svg width="${width}" height="${height}">${svg}</svg>`),
@@ -75,6 +76,7 @@ export class ImageBuffer {
   async drawImage({ image, dimensions, position = {}, dithering = Dithering.None }: DrawImageOptions): Promise<void> {
     const { width, height } = dimensions;
     const { top = 0, left = 0 } = position;
+    if (width === 0 || height === 0) return;
 
     const resizedData: Buffer = await sharp(image.data, {
       raw: { width: image.width, height: image.height, channels: image.channels },

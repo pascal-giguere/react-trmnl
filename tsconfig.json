@@ -19,7 +19,8 @@
     "sourceMap": true,
     "strict": true,
     "verbatimModuleSyntax": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "jsx": "react"
   },
   "include": ["src"],
   "exclude": [".yarn"]

@@ -9,7 +9,7 @@ import type {
   InstanceType,
   Props,
   UpdatePayload,
-  SvgProps,
+  BoxProps,
   TextProps,
   ImageProps,
 } from "./types.mjs";
@@ -47,14 +47,7 @@ export const host: ReconcilerHostConfig = {
   ): Instance => {
     // TODO Finish implementing
     switch (type) {
-      case "svg": {
-        const svgProps = props as SvgProps;
-        return new ReconcilerSvgNode(svgProps.children, {
-          position: { top: 0, left: 0 },
-          dimensions: { width: 400, height: 100 },
-        });
-      }
-      case "text": {
+      case "trmnl-text": {
         const textProps = props as TextProps;
         return new ReconcilerTextNode(
           textProps.children,
@@ -65,7 +58,14 @@ export const host: ReconcilerHostConfig = {
           {},
         );
       }
-      case "image": {
+      case "trmnl-box": {
+        const boxProps = props as BoxProps;
+        return new ReconcilerSvgNode(boxProps.children, {
+          position: { top: 0, left: 0 },
+          dimensions: { width: 400, height: 100 },
+        });
+      }
+      case "trmnl-image": {
         const imageProps = props as ImageProps;
         // TODO: Load image from src
         const image: RawImage = { data: Buffer.alloc(0), width: 0, height: 0, channels: 1 };
