@@ -1,7 +1,7 @@
 {
   "name": "react-trmnl",
   "description": "A React-based renderer for TRMNL (https://usetrmnl.com)",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Pascal Giguère",
   "homepage": "https://github.com/pascal-giguere/react-trmnl",
   "license": "ISC",
@@ -10,16 +10,17 @@
     "url": "https://github.com/pascal-giguere/react-trmnl.git"
   },
   "type": "module",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "files": [
+    "dist/**/*"
+  ],
   "packageManager": "yarn@4.6.0",
   "engines": {
     "node": ">=22",
     "npm": "please-use-yarn",
     "yarn": "4.6.0"
   },
-  "main": "dist/index.mjs",
-  "files": [
-    "dist/**/*"
-  ],
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "rm -rf dist",
@@ -32,7 +33,6 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.0",
     "@types/react": "^19.0.8",
-    "@types/react-reconciler": "^0.28.9",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
     "eslint": "^9.19.0",
@@ -50,6 +50,7 @@
     "typescript-eslint": "^8.22.0"
   },
   "dependencies": {
+    "@types/react-reconciler": "^0.28.9",
     "bmp-ts": "^1.0.9",
     "react-reconciler": "^0.31.0",
     "sharp": "^0.32.6"

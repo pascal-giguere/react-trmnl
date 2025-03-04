@@ -2,19 +2,24 @@ import { DefaultEventPriority } from "react-reconciler/constants.js";
 import type { ReconcilerRoot } from "./root.mjs";
 import { ReconcilerImageNode, ReconcilerSvgNode, ReconcilerTextNode } from "./nodes.mjs";
 import type {
+  BoxProps,
   HostContext,
-  ReconcilerHostConfig,
+  ImageProps,
   Instance,
-  TextInstance,
   InstanceType,
   Props,
-  UpdatePayload,
-  BoxProps,
+  ReconcilerHostConfig,
+  TextInstance,
   TextProps,
-  ImageProps,
+  UpdatePayload,
 } from "./types.mjs";
 import type { OpaqueHandle } from "react-reconciler";
-import type { RawImage } from "../renderer/types.mjs";
+
+export enum TrmnlElement {
+  Text = "trmnl-text",
+  Box = "trmnl-box",
+  Image = "trmnl-image",
+}
 
 let updatePriority: number = DefaultEventPriority;
 const rootHostContext: HostContext = {};
@@ -45,37 +50,15 @@ export const host: ReconcilerHostConfig = {
     _rootContainer: ReconcilerRoot,
     _currentHostContext: HostContext,
   ): Instance => {
-    // TODO Finish implementing
     switch (type) {
-      case "trmnl-text": {
-        const textProps = props as TextProps;
-        return new ReconcilerTextNode(
-          textProps.children,
-          {
-            position: { top: 0, left: 0 },
-            dimensions: { width: 400, height: 100 },
-          },
-          {},
-        );
-      }
-      case "trmnl-box": {
-        const boxProps = props as BoxProps;
-        return new ReconcilerSvgNode(boxProps.children, {
-          position: { top: 0, left: 0 },
-          dimensions: { width: 400, height: 100 },
-        });
-      }
-      case "trmnl-image": {
-        const imageProps = props as ImageProps;
-        // TODO: Load image from src
-        const image: RawImage = { data: Buffer.alloc(0), width: 0, height: 0, channels: 1 };
-        return new ReconcilerImageNode(image, imageProps.dithering, {
-          position: { top: 0, left: 0 },
-          dimensions: { width: 400, height: 100 },
-        });
-      }
+      case TrmnlElement.Text:
+        return ReconcilerTextNode.fromProps(props as TextProps);
+      case TrmnlElement.Box:
+        return ReconcilerSvgNode.fromProps(props as BoxProps);
+      case TrmnlElement.Image:
+        return ReconcilerImageNode.fromProps(props as ImageProps);
       default:
-        throw new Error(`Unsupported instance type: ${type}`);
+        throw new Error(`Unsupported JSX element: <${type}>`);
     }
   },
   createTextInstance: (

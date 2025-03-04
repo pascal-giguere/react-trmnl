@@ -1,6 +1,6 @@
 import React, { type ReactElement } from "react";
 import { ImageFormat, render } from "../../src/index.mjs";
-import { Text } from "../../src/components/Text.js";
+import { Text } from "../../src/components/primitives/Text.js";
 
 const TestComponent = (): ReactElement => <Text>Hello, world!</Text>;
 const DIMENSIONS = { width: 800, height: 480 };
