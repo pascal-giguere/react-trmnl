@@ -5,6 +5,7 @@ import type { ReconcilerNode } from "./nodes.mjs";
 import type { TrmnlElement } from "./host.mjs";
 import type { RawImage } from "../renderer/types.mjs";
 import type { Dithering } from "../renderer/dithering.mjs";
+import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
 
 export type InstanceType = TrmnlElement;
 export type Props = TextProps | BoxProps | ImageProps;
@@ -29,9 +30,27 @@ export type ReconcilerHostConfig = HostConfig<
   unknown
 >;
 
-export type TextProps = { children: string };
-export type BoxProps = { children?: JSX.Element | JSX.Element[] };
-export type ImageProps = { src: string; dithering: Dithering };
+type BaseProps = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+};
+
+export type TextProps = TextStyle &
+  BaseProps & {
+    children: string;
+  };
+
+export type BoxProps = BoxStyle &
+  BaseProps & {
+    children?: JSX.Element | JSX.Element[];
+  };
+
+export type ImageProps = ImageStyle &
+  BaseProps & {
+    src: string;
+  };
 
 export type NodeContent = TextContent | SvgContent | ImageContent;
 

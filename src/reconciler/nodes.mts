@@ -1,6 +1,5 @@
-import type { TextStyle } from "../styling/types.mjs";
 import type { LayoutProps } from "../layout/types.mjs";
-import type { NodeContent, TextContent, SvgContent, ImageContent, TextProps, BoxProps, ImageProps } from "./types.mjs";
+import type { NodeContent, SvgContent, ImageContent, TextProps, BoxProps, ImageProps } from "./types.mjs";
 import type { RawImage } from "../renderer/types.mjs";
 import type { Dithering } from "../renderer/dithering.mjs";
 import type { ImageBuffer } from "../renderer/compositing.mjs";
@@ -25,37 +24,6 @@ export abstract class ReconcilerNode {
   }
 }
 
-export class ReconcilerTextNode extends ReconcilerNode {
-  content: TextContent;
-  style: TextStyle;
-
-  constructor(text: string, layout: LayoutProps, style: TextStyle) {
-    super(layout);
-    this.content = { text };
-    this.style = style;
-  }
-
-  static fromProps(props: TextProps): ReconcilerTextNode {
-    // TODO: Implement
-    return new ReconcilerTextNode(
-      props.children,
-      {
-        position: { top: 0, left: 0 },
-        dimensions: { width: 400, height: 100 },
-      },
-      {},
-    );
-  }
-
-  override async draw(buffer: ImageBuffer): Promise<void> {
-    await buffer.drawText({
-      text: this.content.text,
-      dimensions: this.layout.dimensions,
-      position: this.layout.position,
-    });
-  }
-}
-
 export class ReconcilerSvgNode extends ReconcilerNode {
   content: SvgContent;
 
@@ -64,16 +32,43 @@ export class ReconcilerSvgNode extends ReconcilerNode {
     this.content = { svg };
   }
 
-  static fromProps(props: BoxProps): ReconcilerSvgNode {
-    // TODO: Implement
-    const svg = "<rect width='300' height='180' fill='black' />";
+  static fromTextProps(props: TextProps): ReconcilerSvgNode {
+    const svg =
+      `<text` +
+      ` fill="${props.color}"` +
+      ` font-size="${props.fontSize}"` +
+      ` font-family="${props.fontFamily}"` +
+      ` stroke="${props.borderColor}"` +
+      ` stroke-width="${props.borderWidth}"` +
+      ` paint-order="stroke"` +
+      `>` +
+      `${props.children}` +
+      `</text>`;
     return new ReconcilerSvgNode(svg, {
-      position: { top: 0, left: 0 },
-      dimensions: { width: 400, height: 100 },
+      position: { top: props.top, left: props.left },
+      dimensions: { width: props.width, height: props.height },
+    });
+  }
+
+  static fromBoxProps(props: BoxProps): ReconcilerSvgNode {
+    const svg =
+      `<rect` +
+      ` width="${props.width}"` +
+      ` height="${props.height}"` +
+      ` fill="${props.backgroundColor}"` +
+      ` rx="${props.borderRadius}"` +
+      ` ry="${props.borderRadius}"` +
+      ` stroke="${props.borderColor}"` +
+      ` stroke-width="${props.borderWidth}"` +
+      ` />`;
+    return new ReconcilerSvgNode(svg, {
+      position: { top: props.top, left: props.left },
+      dimensions: { width: props.width, height: props.height },
     });
   }
 
   override async draw(buffer: ImageBuffer): Promise<void> {
+    console.log(this.content.svg);
     await buffer.drawSvg({
       svg: this.content.svg,
       dimensions: this.layout.dimensions,
@@ -90,7 +85,7 @@ export class ReconcilerImageNode extends ReconcilerNode {
     this.content = { image, dithering };
   }
 
-  static fromProps(props: ImageProps): ReconcilerImageNode {
+  static fromImageProps(props: ImageProps): ReconcilerImageNode {
     // TODO: Implement
     const image: RawImage = { data: Buffer.alloc(0), width: 0, height: 0, channels: 1 };
     return new ReconcilerImageNode(image, props.dithering, {

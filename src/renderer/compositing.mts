@@ -45,8 +45,8 @@ export class ImageBuffer {
     strokeWidth = fontSize / 10,
   }: DrawTextOptions): Promise<void> {
     const svg =
-      `<text y="${fontSize}" fill="${fill}" font-size="${fontSize}" font-family="${fontFamily}" ` +
-      `stroke="${stroke}" stroke-width="${strokeWidth}" paint-order="stroke">${text}</text>`;
+      `<text fill="${fill}" font-size="${fontSize}" font-family="${fontFamily}" stroke="${stroke}"` +
+      ` stroke-width="${strokeWidth}" paint-order="stroke">${text}</text>`;
     await this.drawSvg({ svg, dimensions, position });
   }
 

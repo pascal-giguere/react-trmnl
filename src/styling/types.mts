@@ -1,12 +1,22 @@
-export type StylingProps = {
-  backgroundColor?: string;
-};
+import type { Color } from "../renderer/colors.mjs";
+import type { Font } from "../renderer/fonts.mjs";
+import type { Dithering } from "../renderer/dithering.mjs";
 
 export type TextStyle = {
-  color?: string;
-  fill?: string;
-  fontSize?: number;
-  fontFamily?: string;
-  stroke?: "black" | "white" | "none";
-  strokeWidth?: number;
+  color: Color;
+  fontSize: number;
+  fontFamily: Font;
+  borderColor: Color;
+  borderWidth: number;
+};
+
+export type BoxStyle = {
+  backgroundColor: Color;
+  borderColor: Color;
+  borderWidth: number;
+  borderRadius: number;
+};
+
+export type ImageStyle = {
+  dithering: Dithering;
 };

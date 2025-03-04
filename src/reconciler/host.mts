@@ -1,6 +1,7 @@
+import type { OpaqueHandle } from "react-reconciler";
 import { DefaultEventPriority } from "react-reconciler/constants.js";
 import type { ReconcilerRoot } from "./root.mjs";
-import { ReconcilerImageNode, ReconcilerSvgNode, ReconcilerTextNode } from "./nodes.mjs";
+import { ReconcilerImageNode, ReconcilerSvgNode } from "./nodes.mjs";
 import type {
   BoxProps,
   HostContext,
@@ -13,7 +14,6 @@ import type {
   TextProps,
   UpdatePayload,
 } from "./types.mjs";
-import type { OpaqueHandle } from "react-reconciler";
 
 export enum TrmnlElement {
   Text = "trmnl-text",
@@ -52,11 +52,11 @@ export const host: ReconcilerHostConfig = {
   ): Instance => {
     switch (type) {
       case TrmnlElement.Text:
-        return ReconcilerTextNode.fromProps(props as TextProps);
+        return ReconcilerSvgNode.fromTextProps(props as TextProps);
       case TrmnlElement.Box:
-        return ReconcilerSvgNode.fromProps(props as BoxProps);
+        return ReconcilerSvgNode.fromBoxProps(props as BoxProps);
       case TrmnlElement.Image:
-        return ReconcilerImageNode.fromProps(props as ImageProps);
+        return ReconcilerImageNode.fromImageProps(props as ImageProps);
       default:
         throw new Error(`Unsupported JSX element: <${type}>`);
     }

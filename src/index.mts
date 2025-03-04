@@ -7,6 +7,7 @@ export { Text } from "./components/primitives/Text.js";
 export { Box } from "./components/primitives/Box.js";
 export { Image } from "./components/primitives/Image.js";
 
+export { Color } from "./renderer/colors.mjs";
 export { ImageFormat };
 
 export type RenderOptions = {
