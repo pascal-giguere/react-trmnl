@@ -1,19 +1,15 @@
 // process.env.FC_DEBUG = "1024";
+import { readImage } from "./filesystem.js";
+
 process.env.PANGOCAIRO_BACKEND = "fontconfig";
 
 import { join } from "node:path";
-import sharp from "sharp";
 import { ImageBuffer } from "./compositing.mjs";
 import { Dithering } from "./dithering.mjs";
-import type { RawBWImage, RawImage } from "./types.mjs";
+import type { RawBWImage } from "./types.mjs";
 import { VectorFont } from "./fonts.mjs";
 
 const inputImage = await readImage(join(process.cwd(), "/assets/images/rover_rgb.jpg"));
-
-async function readImage(path: string): Promise<RawImage> {
-  const { data, info } = await sharp(path).raw().toBuffer({ resolveWithObject: true });
-  return { data, width: info.width, height: info.height, channels: info.channels };
-}
 
 export async function testCompositing(imageBuffer: ImageBuffer): Promise<RawBWImage> {
   console.time("Compositing");

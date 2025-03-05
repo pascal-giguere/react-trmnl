@@ -1,8 +1,11 @@
 import React, { type ReactElement } from "react";
-import { ImageFormat, render } from "../../src/index.mjs";
-import { Text } from "../../src/components/primitives/Text.js";
+import { render, Text, ImageFormat } from "../../src/index.mjs";
 
-const TestComponent = (): ReactElement => <Text>Hello, world!</Text>;
+const TestComponent = (): ReactElement => (
+  <Text width={100} height={100}>
+    Hello, world!
+  </Text>
+);
 const DIMENSIONS = { width: 800, height: 480 };
 const BMP_HEADER_SIZE = 64;
 

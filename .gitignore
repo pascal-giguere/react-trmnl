@@ -15,3 +15,4 @@
 
 # Output folders
 **/dist
+test/**/snapshots/actual
