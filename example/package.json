@@ -6,11 +6,11 @@
   "homepage": "https://github.com/pascal-giguere/react-trmnl",
   "license": "ISC",
   "type": "module",
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@4.7.0",
   "engines": {
     "node": ">=22",
     "npm": "please-use-yarn",
-    "yarn": "4.6.0"
+    "yarn": "4.7.0"
   },
   "main": "dist/index.mjs",
   "scripts": {
