@@ -1,18 +1,27 @@
 import { join } from "node:path";
-import { promises } from "node:fs";
-import type { RawImage } from "../../../src/renderer/types.mjs";
-import { readImage } from "../../../src/renderer/filesystem.js";
+import { mkdir, writeFile } from "node:fs/promises";
+import type { ReactElement } from "react";
+import { readFileData } from "../../../src/renderer/filesystem.js";
+import { ImageFormat, render } from "../../../src/index.mjs";
+
+const DIMENSIONS = { width: 800, height: 480 };
 
 const snapshotPath: string = join(process.cwd(), "/test/unit/snapshots/");
 const expectedPath: string = join(snapshotPath, "/expected/");
 const actualPath: string = join(snapshotPath, "/actual/");
 
-export async function readSnapshotData(filename: string): Promise<Buffer> {
-  const image: RawImage = await readImage(join(expectedPath, filename));
-  return image.data;
+export async function expectSnapshotMatch(element: ReactElement, snapshotFilename: string): Promise<void> {
+  const rendered: Buffer = await render(element, { ...DIMENSIONS, format: ImageFormat.BMP });
+  await writeSnapshotData(snapshotFilename, rendered);
+  const expected: Buffer = await readSnapshotData(snapshotFilename);
+  expect(rendered.toString("base64")).toEqual(expected.toString("base64"));
 }
 
-export async function writeSnapshotData(filename: string, data: Buffer): Promise<void> {
-  await promises.mkdir(actualPath, { recursive: true });
-  await promises.writeFile(join(actualPath, filename), data);
+async function readSnapshotData(filename: string): Promise<Buffer> {
+  return readFileData(join(expectedPath, filename));
+}
+
+async function writeSnapshotData(filename: string, data: Buffer): Promise<void> {
+  await mkdir(actualPath, { recursive: true });
+  await writeFile(join(actualPath, filename), data);
 }
