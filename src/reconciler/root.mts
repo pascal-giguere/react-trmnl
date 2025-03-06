@@ -11,21 +11,12 @@ const reconciler = ReactReconciler(host);
 
 export class ReconcilerRoot {
   private readonly buffer: ImageBuffer;
-  private readonly rootContainer: OpaqueRoot;
+  private rootContainer: OpaqueRoot;
   private rootNode: ReconcilerNode | null = null;
 
   constructor(dimensions: RenderingDimensions) {
-    this.rootContainer = reconciler.createContainer(
-      this,
-      0,
-      null,
-      false,
-      null,
-      RECONCILER_ID_PREFIX,
-      this.handleRecoverableError,
-      null,
-    );
     this.buffer = new ImageBuffer(dimensions);
+    this.initContainer();
   }
 
   async render(element: ReactNode): Promise<void> {
@@ -46,11 +37,24 @@ export class ReconcilerRoot {
 
   clear(): void {
     this.buffer.clear();
-    this.rootNode?.clearChildren();
+    this.initContainer();
   }
 
   getRawImage(): RawBWImage {
     return this.buffer.toRawImage();
+  }
+
+  private initContainer(): void {
+    this.rootContainer = reconciler.createContainer(
+      this,
+      0,
+      null,
+      false,
+      null,
+      RECONCILER_ID_PREFIX,
+      this.handleRecoverableError,
+      null,
+    );
   }
 
   private async drawNode(node: ReconcilerNode): Promise<void> {
@@ -62,6 +66,6 @@ export class ReconcilerRoot {
   }
 
   private handleRecoverableError(error: Error): void {
-    console.error("Recoverable reconciler error:", error);
+    throw new Error("Reconciler error: " + JSON.stringify(error));
   }
 }

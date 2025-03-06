@@ -20,8 +20,8 @@ export const Box = ({
   left = 0,
   top = 0,
   backgroundColor = Color.None,
-  borderColor = Color.None,
-  borderWidth = 1,
+  borderColor = Color.Black,
+  borderWidth = 0,
   borderRadius = 0,
 }: Props): ReactElement => (
   <trmnl-box

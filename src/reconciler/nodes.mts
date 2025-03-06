@@ -23,8 +23,12 @@ export abstract class ReconcilerNode {
     this.children = this.children.filter((c) => c !== child);
   }
 
-  clearChildren(): void {
-    this.children = [];
+  insertBefore(child: ReconcilerNode, beforeChild: ReconcilerNode): void {
+    const index = this.children.indexOf(beforeChild);
+    if (index === -1) {
+      throw new Error("Child not found");
+    }
+    this.children.splice(index, 0, child);
   }
 }
 

@@ -71,17 +71,13 @@ export const host: ReconcilerHostConfig = {
     return instance;
   },
   appendInitialChild: (parent: Instance, child: Instance): void => {
-    console.log("appendInitialChild");
     parent.appendChild(child);
   },
   appendChild(parent: Instance, child: Instance): void {
     parent.appendChild(child);
   },
-  insertBefore(parent: ReconcilerNode, child: ReconcilerNode, beforeChild: ReconcilerNode) {
-    console.log("insertBefore");
-  },
-  insertInContainerBefore(container: ReconcilerRoot, child: ReconcilerNode, beforeChild: ReconcilerNode) {
-    console.log("insertInContainerBefore");
+  insertBefore(parent: ReconcilerNode, child: ReconcilerNode, beforeChild: ReconcilerNode): void {
+    parent.insertBefore(child, beforeChild);
   },
   removeChild(parent: Instance, child: Instance): void {
     parent.removeChild(child);
@@ -118,13 +114,10 @@ export const host: ReconcilerHostConfig = {
     _oldProps: Props,
     _newProps: Props,
     _internalInstanceHandle: OpaqueHandle,
-  ): void {
-    console.log("commitUpdate");
-  },
+  ): void {},
   commitTextUpdate(_textInstance: TextInstance, _oldText: string, _newText: string): void {},
   resetAfterCommit: (_containerInfo: ReconcilerRoot): void => {},
   clearContainer(container: ReconcilerRoot): void {
-    // TODO remove all children from root node
     container.clear();
   },
   // Missing from type definitions
