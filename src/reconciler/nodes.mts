@@ -93,8 +93,8 @@ export class ReconcilerImageNode extends ReconcilerNode {
     // TODO: Implement
     const image: RawImage = { data: Buffer.alloc(0), width: 0, height: 0, channels: 1 };
     return new ReconcilerImageNode(image, props.dithering, {
-      position: { top: 0, left: 0 },
-      dimensions: { width: 400, height: 100 },
+      position: { top: props.top, left: props.left },
+      dimensions: { width: props.width, height: props.height },
     });
   }
 
