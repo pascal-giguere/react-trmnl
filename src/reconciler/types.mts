@@ -10,7 +10,7 @@ import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
 export type InstanceType = TrmnlElement;
 export type Props = TextProps | BoxProps | ImageProps;
 export type Instance = ReconcilerNode;
-export type TextInstance = never;
+export type TextInstance = ReconcilerNode;
 export type HostContext = object;
 export type UpdatePayload = true;
 

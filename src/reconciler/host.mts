@@ -26,7 +26,7 @@ let updatePriority: number = DefaultEventPriority;
 export const host: ReconcilerHostConfig = {
   supportsMutation: true,
   shouldSetTextContent(_type: InstanceType, _props: Props): boolean {
-    return true;
+    return false;
   },
   // @ts-expect-error - Missing from type definitions
   maySuspendCommit(_type: InstanceType, _props: Props): boolean {
@@ -48,7 +48,7 @@ export const host: ReconcilerHostConfig = {
     _rootContainer: ReconcilerRoot,
     _currentHostContext: HostContext,
   ): Instance => {
-    console.log(type, props);
+    console.log("createInstance");
     switch (type) {
       case TrmnlElement.Text:
         return ReconcilerSvgNode.fromTextProps(props as TextProps);
@@ -66,12 +66,13 @@ export const host: ReconcilerHostConfig = {
     _hostContext: HostContext,
     _internalInstanceHandle,
   ): TextInstance => {
-    throw new Error("Unsupported text instance");
+    return new ReconcilerSvgNode("", { position: { left: 0, top: 0 }, dimensions: { width: 0, height: 0 } });
   },
   getPublicInstance: (instance: Instance): Instance => {
     return instance;
   },
   appendInitialChild: (parent: Instance, child: Instance): void => {
+    console.log("appendInitialChild");
     parent.appendChild(child);
   },
   appendChild(parent: Instance, child: Instance): void {
@@ -93,9 +94,11 @@ export const host: ReconcilerHostConfig = {
     _props: Props,
     _hostContext: HostContext,
   ): boolean => {
+    console.log("finalizeInitialChildren");
     return false;
   },
   appendChildToContainer: (container: ReconcilerRoot, child: Instance): void => {
+    console.log("appendChildToContainer");
     container.setRootNode(child);
   },
   prepareUpdate(
@@ -109,6 +112,7 @@ export const host: ReconcilerHostConfig = {
     return true;
   },
   prepareForCommit: (_containerInfo: ReconcilerRoot) => {
+    console.log("prepareForCommit");
     return null;
   },
   commitUpdate(
@@ -122,10 +126,12 @@ export const host: ReconcilerHostConfig = {
     console.log("commitUpdate");
   },
   commitTextUpdate(_textInstance: TextInstance, _oldText: string, _newText: string): void {},
-  resetAfterCommit: (_containerInfo: ReconcilerRoot): void => {},
+  resetAfterCommit: (_containerInfo: ReconcilerRoot): void => {
+    console.log("resetAfterCommit");
+  },
   clearContainer(container: ReconcilerRoot): void {
-    // TODO remove all children from root node
-    container.clear();
+    console.log("clearContainer");
+    // container.clear();
   },
   // Missing from type definitions
   resolveUpdatePriority(): number {
