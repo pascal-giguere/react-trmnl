@@ -40,51 +40,63 @@ export class ReconcilerSvgNode extends ReconcilerNode {
     this.content = { svg };
   }
 
-  static fromTextProps(props: TextProps): ReconcilerSvgNode {
+  static fromTextProps({
+    children,
+    width,
+    height,
+    top,
+    left,
+    color,
+    fontSize,
+    fontFamily,
+    borderColor,
+    borderWidth,
+  }: TextProps): ReconcilerSvgNode {
     const svg =
       `<text` +
-      ` fill="${props.color}"` +
-      ` font-size="${props.fontSize}"` +
-      ` y="${props.fontSize}"` +
-      ` font-family="${props.fontFamily}"` +
-      ` stroke="${props.borderColor}"` +
-      ` stroke-width="${props.borderWidth * 2}"` +
+      ` fill="${color}"` +
+      ` font-size="${fontSize}"` +
+      ` y="${fontSize}"` +
+      ` font-family="${fontFamily}"` +
+      ` stroke="${borderColor}"` +
+      ` stroke-width="${borderWidth * 2}"` +
       ` paint-order="stroke"` +
       `>` +
-      `${props.children}` +
+      `${children}` +
       `</text>`;
-    return new ReconcilerSvgNode(svg, {
-      position: { top: props.top, left: props.left },
-      dimensions: { width: props.width, height: props.height },
-    });
+    return new ReconcilerSvgNode(svg, { dimensions: { width, height }, position: { top, left } });
   }
 
-  static fromBoxProps(props: BoxProps): ReconcilerSvgNode {
+  static fromBoxProps({
+    width,
+    height,
+    top,
+    left,
+    backgroundColor,
+    borderColor,
+    borderWidth,
+    borderRadius,
+  }: BoxProps): ReconcilerSvgNode {
     const svg =
       `<rect` +
-      ` width="${props.width - props.borderWidth}"` +
-      ` height="${props.height - props.borderWidth}"` +
-      ` x="${props.borderWidth / 2}"` +
-      ` y="${props.borderWidth / 2}"` +
-      ` fill="${props.backgroundColor}"` +
-      ` rx="${props.borderRadius}"` +
-      ` ry="${props.borderRadius}"` +
-      ` stroke="${props.borderColor}"` +
-      ` stroke-width="${props.borderWidth}"` +
+      ` width="${width - borderWidth}"` +
+      ` height="${height - borderWidth}"` +
+      ` x="${borderWidth / 2}"` +
+      ` y="${borderWidth / 2}"` +
+      ` fill="${backgroundColor}"` +
+      ` rx="${borderRadius}"` +
+      ` ry="${borderRadius}"` +
+      ` stroke="${borderColor}"` +
+      ` stroke-width="${borderWidth}"` +
       ` />`;
-    return new ReconcilerSvgNode(svg, {
-      position: { top: props.top, left: props.left },
-      dimensions: { width: props.width, height: props.height },
-    });
+    return new ReconcilerSvgNode(svg, { dimensions: { width, height }, position: { top, left } });
   }
 
   override async draw(buffer: ImageBuffer): Promise<void> {
-    console.log(this.content.svg);
-    await buffer.drawSvg({
-      svg: this.content.svg,
-      dimensions: this.layout.dimensions,
-      position: this.layout.position,
-    });
+    const { dimensions, position } = this.layout;
+    const { svg } = this.content;
+    console.log(svg);
+    await buffer.drawSvg({ svg, dimensions, position });
   }
 }
 
@@ -96,22 +108,16 @@ export class ReconcilerImageNode extends ReconcilerNode {
     this.content = { image, dithering };
   }
 
-  static fromImageProps(props: ImageProps): ReconcilerImageNode {
-    // TODO: Implement image creation
+  static fromImageProps({ src, width, height, top, left, dithering }: ImageProps): ReconcilerImageNode {
+    // TODO: Load image from src
     const image: RawImage = { data: Buffer.alloc(0), width: 0, height: 0, channels: 1 };
-    return new ReconcilerImageNode(image, props.dithering, {
-      position: { top: props.top, left: props.left },
-      dimensions: { width: props.width, height: props.height },
-    });
+    return new ReconcilerImageNode(image, dithering, { dimensions: { width, height }, position: { top, left } });
   }
 
   override async draw(buffer: ImageBuffer): Promise<void> {
-    await buffer.drawImage({
-      image: this.content.image,
-      dimensions: this.layout.dimensions,
-      position: this.layout.position,
-      dithering: this.content.dithering,
-    });
+    const { dimensions, position } = this.layout;
+    const { image, dithering } = this.content;
+    await buffer.drawImage({ image, dimensions, position, dithering });
   }
 }
 
@@ -119,7 +125,7 @@ export class ReconcilerNoopNode extends ReconcilerNode {
   content: NoopContent;
 
   constructor() {
-    super({ position: { top: 0, left: 0 }, dimensions: { width: 0, height: 0 } });
+    super({ dimensions: { width: 0, height: 0 }, position: { top: 0, left: 0 } });
   }
 
   override async draw(_buffer: ImageBuffer): Promise<void> {}
