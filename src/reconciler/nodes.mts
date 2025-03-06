@@ -44,7 +44,7 @@ export class ReconcilerSvgNode extends ReconcilerNode {
       ` y="${props.fontSize}"` +
       ` font-family="${props.fontFamily}"` +
       ` stroke="${props.borderColor}"` +
-      ` stroke-width="${props.borderWidth}"` +
+      ` stroke-width="${props.borderWidth * 2}"` +
       ` paint-order="stroke"` +
       `>` +
       `${props.children}` +
@@ -58,8 +58,10 @@ export class ReconcilerSvgNode extends ReconcilerNode {
   static fromBoxProps(props: BoxProps): ReconcilerSvgNode {
     const svg =
       `<rect` +
-      ` width="${props.width}"` +
-      ` height="${props.height}"` +
+      ` width="${props.width - props.borderWidth}"` +
+      ` height="${props.height - props.borderWidth}"` +
+      ` x="${props.borderWidth / 2}"` +
+      ` y="${props.borderWidth / 2}"` +
       ` fill="${props.backgroundColor}"` +
       ` rx="${props.borderRadius}"` +
       ` ry="${props.borderRadius}"` +

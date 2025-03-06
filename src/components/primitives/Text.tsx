@@ -25,7 +25,7 @@ export const Text = ({
   fontSize = 12,
   fontFamily = DefaultFont.Sans,
   borderColor = Color.None,
-  borderWidth = 2,
+  borderWidth = 1,
 }: Props): ReactElement => (
   <trmnl-text
     children={children}
