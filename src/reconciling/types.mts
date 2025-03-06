@@ -3,8 +3,8 @@ import type { HostConfig } from "react-reconciler";
 import type { ReconcilerRoot } from "./root.mjs";
 import type { ReconcilerNode, ReconcilerNoopNode } from "./nodes.mjs";
 import type { TrmnlElement } from "./host.mjs";
-import type { RawImage } from "../renderer/types.mjs";
-import type { Dithering } from "../renderer/dithering.mjs";
+import type { RawImage } from ".././rendering/types.mjs";
+import type { Dithering } from ".././rendering/dithering.mjs";
 import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
 
 export type InstanceType = TrmnlElement;

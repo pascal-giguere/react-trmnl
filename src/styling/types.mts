@@ -1,6 +1,6 @@
-import type { Color } from "../renderer/colors.mjs";
-import type { Font } from "../renderer/fonts.mjs";
-import type { Dithering } from "../renderer/dithering.mjs";
+import type { Color } from ".././rendering/colors.mjs";
+import type { Font } from ".././rendering/fonts.mjs";
+import type { Dithering } from ".././rendering/dithering.mjs";
 
 export type TextStyle = {
   color: Color;

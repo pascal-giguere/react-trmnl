@@ -1,6 +1,6 @@
 import React, { type ReactElement } from "react";
-import { Color } from "../../renderer/colors.mjs";
-import { type Font, DefaultFont } from "../../renderer/fonts.mjs";
+import { Color } from "../.././rendering/colors.mjs";
+import { type Font, DefaultFont } from "../.././rendering/fonts.mjs";
 
 interface Props {
   children: string;

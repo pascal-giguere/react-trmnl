@@ -1,5 +1,5 @@
 import React, { type ReactElement } from "react";
-import { Dithering } from "../../renderer/dithering.mjs";
+import { Dithering } from "../.././rendering/dithering.mjs";
 
 interface Props {
   src: string;

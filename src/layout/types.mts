@@ -1,4 +1,4 @@
-import type { RenderingDimensions, RenderingPosition } from "../renderer/types.mjs";
+import type { RenderingDimensions, RenderingPosition } from ".././rendering/types.mjs";
 
 export type LayoutProps = {
   position: RenderingPosition;

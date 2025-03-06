@@ -1,8 +1,8 @@
 import type { LayoutProps } from "../layout/types.mjs";
 import type { NodeContent, SvgContent, ImageContent, TextProps, BoxProps, ImageProps, NoopContent } from "./types.mjs";
-import type { RawImage } from "../renderer/types.mjs";
-import type { Dithering } from "../renderer/dithering.mjs";
-import type { ImageBuffer } from "../renderer/compositing.mjs";
+import type { RawImage } from ".././rendering/types.mjs";
+import type { Dithering } from ".././rendering/dithering.mjs";
+import type { ImageBuffer } from ".././rendering/compositing.mjs";
 
 export abstract class ReconcilerNode {
   abstract content: NodeContent;

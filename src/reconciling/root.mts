@@ -1,8 +1,8 @@
 import { type ReactNode } from "react";
 import ReactReconciler, { type OpaqueRoot } from "react-reconciler";
 import { host } from "./host.mjs";
-import { ImageBuffer } from "../renderer/compositing.mjs";
-import type { RawBWImage, RenderingDimensions } from "../renderer/types.mjs";
+import { ImageBuffer } from ".././rendering/compositing.mjs";
+import type { RawBWImage, RenderingDimensions } from ".././rendering/types.mjs";
 import { ReconcilerNode } from "./nodes.mjs";
 
 const RECONCILER_ID_PREFIX = "react-trmnl";

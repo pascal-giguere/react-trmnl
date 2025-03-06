@@ -1,5 +1,5 @@
 import React, { type ReactElement } from "react";
-import { Color } from "../../renderer/colors.mjs";
+import { Color } from "../.././rendering/colors.mjs";
 
 interface Props {
   children?: ReactElement | ReactElement[];
