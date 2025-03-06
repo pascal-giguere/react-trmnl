@@ -1,7 +1,7 @@
 import type { OpaqueHandle } from "react-reconciler";
 import { DefaultEventPriority } from "react-reconciler/constants.js";
 import type { ReconcilerRoot } from "./root.mjs";
-import { ReconcilerImageNode, ReconcilerSvgNode } from "./nodes.mjs";
+import { ReconcilerImageNode, ReconcilerNode, ReconcilerSvgNode } from "./nodes.mjs";
 import type {
   BoxProps,
   HostContext,
@@ -22,27 +22,25 @@ export enum TrmnlElement {
 }
 
 let updatePriority: number = DefaultEventPriority;
-const rootHostContext: HostContext = {};
-const childHostContext: HostContext = {};
 
 export const host: ReconcilerHostConfig = {
   supportsMutation: true,
   shouldSetTextContent(_type: InstanceType, _props: Props): boolean {
     return true;
   },
-  // Missing from type definitions
+  // @ts-expect-error - Missing from type definitions
   maySuspendCommit(_type: InstanceType, _props: Props): boolean {
     return false;
   },
   getRootHostContext: (_rootContainer: ReconcilerRoot): HostContext => {
-    return rootHostContext;
+    return {};
   },
   getChildHostContext: (
     _parentHostContext: HostContext,
     _type: InstanceType,
     _rootContainer: ReconcilerRoot | undefined,
   ): HostContext => {
-    return childHostContext;
+    return {};
   },
   createInstance: (
     type: InstanceType,
@@ -50,6 +48,7 @@ export const host: ReconcilerHostConfig = {
     _rootContainer: ReconcilerRoot,
     _currentHostContext: HostContext,
   ): Instance => {
+    console.log(type, props);
     switch (type) {
       case TrmnlElement.Text:
         return ReconcilerSvgNode.fromTextProps(props as TextProps);
@@ -69,16 +68,25 @@ export const host: ReconcilerHostConfig = {
   ): TextInstance => {
     throw new Error("Unsupported text instance");
   },
+  getPublicInstance: (instance: Instance): Instance => {
+    return instance;
+  },
   appendInitialChild: (parent: Instance, child: Instance): void => {
     parent.appendChild(child);
   },
   appendChild(parent: Instance, child: Instance): void {
     parent.appendChild(child);
   },
+  insertBefore(parent: ReconcilerNode, child: ReconcilerNode, beforeChild: ReconcilerNode) {
+    console.log("insertBefore");
+  },
+  insertInContainerBefore(container: ReconcilerRoot, child: ReconcilerNode, beforeChild: ReconcilerNode) {
+    console.log("insertInContainerBefore");
+  },
   removeChild(parent: Instance, child: Instance): void {
     parent.removeChild(child);
   },
-  // @ts-expect-error - Incorrect type definitions, rootContainer is not in params
+  // Incorrect type definitions, rootContainer is not in params
   finalizeInitialChildren: (
     _instance: Instance,
     _type: InstanceType,
@@ -110,11 +118,14 @@ export const host: ReconcilerHostConfig = {
     _oldProps: Props,
     _newProps: Props,
     _internalInstanceHandle: OpaqueHandle,
-  ): void {},
+  ): void {
+    console.log("commitUpdate");
+  },
   commitTextUpdate(_textInstance: TextInstance, _oldText: string, _newText: string): void {},
   resetAfterCommit: (_containerInfo: ReconcilerRoot): void => {},
   clearContainer(container: ReconcilerRoot): void {
-    container.clearBuffer();
+    // TODO remove all children from root node
+    container.clear();
   },
   // Missing from type definitions
   resolveUpdatePriority(): number {

@@ -44,8 +44,9 @@ export class ReconcilerRoot {
     this.rootNode = node;
   }
 
-  clearBuffer(): void {
+  clear(): void {
     this.buffer.clear();
+    this.rootNode?.clearChildren();
   }
 
   getRawImage(): RawBWImage {

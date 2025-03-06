@@ -22,6 +22,10 @@ export abstract class ReconcilerNode {
   removeChild(child: ReconcilerNode): void {
     this.children = this.children.filter((c) => c !== child);
   }
+
+  clearChildren(): void {
+    this.children = [];
+  }
 }
 
 export class ReconcilerSvgNode extends ReconcilerNode {

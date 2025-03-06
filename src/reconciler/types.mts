@@ -11,7 +11,7 @@ export type InstanceType = TrmnlElement;
 export type Props = TextProps | BoxProps | ImageProps;
 export type Instance = ReconcilerNode;
 export type TextInstance = never;
-export type HostContext = { todo?: string };
+export type HostContext = object;
 export type UpdatePayload = true;
 
 export type ReconcilerHostConfig = HostConfig<
@@ -22,7 +22,7 @@ export type ReconcilerHostConfig = HostConfig<
   TextInstance,
   never,
   never,
-  never,
+  Instance,
   HostContext,
   UpdatePayload,
   unknown,
