@@ -1,3 +1,5 @@
+process.env.PANGOCAIRO_BACKEND = "fontconfig";
+
 export type Font = DefaultFont | VectorFont | BitmapFont;
 
 export enum DefaultFont {

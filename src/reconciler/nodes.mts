@@ -41,6 +41,7 @@ export class ReconcilerSvgNode extends ReconcilerNode {
       `<text` +
       ` fill="${props.color}"` +
       ` font-size="${props.fontSize}"` +
+      ` y="${props.fontSize}"` +
       ` font-family="${props.fontFamily}"` +
       ` stroke="${props.borderColor}"` +
       ` stroke-width="${props.borderWidth}"` +
