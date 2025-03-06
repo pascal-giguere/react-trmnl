@@ -1,5 +1,5 @@
 import type { LayoutProps } from "../layout/types.mjs";
-import type { NodeContent, SvgContent, ImageContent, TextProps, BoxProps, ImageProps } from "./types.mjs";
+import type { NodeContent, SvgContent, ImageContent, TextProps, BoxProps, ImageProps, NoopContent } from "./types.mjs";
 import type { RawImage } from "../renderer/types.mjs";
 import type { Dithering } from "../renderer/dithering.mjs";
 import type { ImageBuffer } from "../renderer/compositing.mjs";
@@ -90,7 +90,7 @@ export class ReconcilerImageNode extends ReconcilerNode {
   }
 
   static fromImageProps(props: ImageProps): ReconcilerImageNode {
-    // TODO: Implement
+    // TODO: Implement image creation
     const image: RawImage = { data: Buffer.alloc(0), width: 0, height: 0, channels: 1 };
     return new ReconcilerImageNode(image, props.dithering, {
       position: { top: props.top, left: props.left },
@@ -106,4 +106,14 @@ export class ReconcilerImageNode extends ReconcilerNode {
       dithering: this.content.dithering,
     });
   }
+}
+
+export class ReconcilerNoopNode extends ReconcilerNode {
+  content: NoopContent;
+
+  constructor() {
+    super({ position: { top: 0, left: 0 }, dimensions: { width: 0, height: 0 } });
+  }
+
+  override async draw(_buffer: ImageBuffer): Promise<void> {}
 }

@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import type { HostConfig } from "react-reconciler";
 import type { ReconcilerRoot } from "./root.mjs";
-import type { ReconcilerNode } from "./nodes.mjs";
+import type { ReconcilerNode, ReconcilerNoopNode } from "./nodes.mjs";
 import type { TrmnlElement } from "./host.mjs";
 import type { RawImage } from "../renderer/types.mjs";
 import type { Dithering } from "../renderer/dithering.mjs";
@@ -10,7 +10,7 @@ import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
 export type InstanceType = TrmnlElement;
 export type Props = TextProps | BoxProps | ImageProps;
 export type Instance = ReconcilerNode;
-export type TextInstance = never;
+export type TextInstance = ReconcilerNoopNode;
 export type HostContext = object;
 export type UpdatePayload = true;
 
@@ -52,11 +52,7 @@ export type ImageProps = ImageStyle &
     src: string;
   };
 
-export type NodeContent = TextContent | SvgContent | ImageContent;
-
-export type TextContent = {
-  text: string;
-};
+export type NodeContent = SvgContent | ImageContent | NoopContent;
 
 export type SvgContent = {
   svg: string;
@@ -66,3 +62,5 @@ export type ImageContent = {
   image: RawImage;
   dithering: Dithering;
 };
+
+export type NoopContent = unknown;

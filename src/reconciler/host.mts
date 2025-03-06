@@ -1,7 +1,7 @@
 import type { OpaqueHandle } from "react-reconciler";
 import { DefaultEventPriority } from "react-reconciler/constants.js";
 import type { ReconcilerRoot } from "./root.mjs";
-import { ReconcilerImageNode, ReconcilerNode, ReconcilerSvgNode } from "./nodes.mjs";
+import { ReconcilerImageNode, ReconcilerNode, ReconcilerNoopNode, ReconcilerSvgNode } from "./nodes.mjs";
 import type {
   BoxProps,
   HostContext,
@@ -26,7 +26,7 @@ let updatePriority: number = DefaultEventPriority;
 export const host: ReconcilerHostConfig = {
   supportsMutation: true,
   shouldSetTextContent(_type: InstanceType, _props: Props): boolean {
-    return true;
+    return false;
   },
   // @ts-expect-error - Missing from type definitions
   maySuspendCommit(_type: InstanceType, _props: Props): boolean {
@@ -48,7 +48,6 @@ export const host: ReconcilerHostConfig = {
     _rootContainer: ReconcilerRoot,
     _currentHostContext: HostContext,
   ): Instance => {
-    console.log(type, props);
     switch (type) {
       case TrmnlElement.Text:
         return ReconcilerSvgNode.fromTextProps(props as TextProps);
@@ -57,7 +56,7 @@ export const host: ReconcilerHostConfig = {
       case TrmnlElement.Image:
         return ReconcilerImageNode.fromImageProps(props as ImageProps);
       default:
-        throw new Error(`Unsupported JSX element: <${type}>`);
+        throw new Error(`JSX element '<${type}>' is not supported by react-trmnl.`);
     }
   },
   createTextInstance: (
@@ -66,12 +65,13 @@ export const host: ReconcilerHostConfig = {
     _hostContext: HostContext,
     _internalInstanceHandle,
   ): TextInstance => {
-    throw new Error("Unsupported text instance");
+    return new ReconcilerNoopNode();
   },
   getPublicInstance: (instance: Instance): Instance => {
     return instance;
   },
   appendInitialChild: (parent: Instance, child: Instance): void => {
+    console.log("appendInitialChild");
     parent.appendChild(child);
   },
   appendChild(parent: Instance, child: Instance): void {
