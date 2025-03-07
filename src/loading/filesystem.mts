@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import sharp from "sharp";
-import type { RawImage } from "./types.mjs";
+import type { RawImage } from "../rendering/types.mjs";
 
 export async function readFileData(path: string): Promise<Buffer> {
   return readFile(path);

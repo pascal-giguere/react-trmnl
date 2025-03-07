@@ -1,20 +1,15 @@
 import { encode as bmpEncode, BmpCompression } from "bmp-ts";
 import sharp from "sharp";
 import type { RawBWImage } from "./types.mjs";
+import { OutputImageFormat } from "./images.mjs";
 
-export enum ImageFormat {
-  BMP = "bmp", // Uncompressed, 1-channel, 1-bit
-  PNG = "png", // Compressed, 1-channel, 1-bit
-  Raw = "raw", // Uncompressed, 1-channel, 8-bit
-}
-
-export async function encodeImage(image: RawBWImage, format: ImageFormat): Promise<Buffer> {
+export async function encodeImage(image: RawBWImage, format: OutputImageFormat): Promise<Buffer> {
   switch (format) {
-    case ImageFormat.BMP:
+    case OutputImageFormat.BMP:
       return encodeBMP(image);
-    case ImageFormat.PNG:
+    case OutputImageFormat.PNG:
       return encodePNG(image);
-    case ImageFormat.Raw:
+    case OutputImageFormat.Raw:
       return image.data;
   }
 }

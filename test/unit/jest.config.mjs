@@ -1,6 +1,6 @@
 export default {
   roots: ["<rootDir>", "<rootDir>/../../src"],
-  testMatch: ["**/*.test.ts", "**/*.test.tsx"],
+  testMatch: ["**/*.test.mts", "**/*.test.tsx"],
   moduleFileExtensions: ["ts", "mts", "tsx", "js", "mjs", "json"],
   extensionsToTreatAsEsm: [".ts", ".tsx", ".mts"],
 

@@ -5,7 +5,7 @@
     <scripts>
       <script value="test" />
     </scripts>
-    <arguments value="-t &quot;renders React code matching snapshots&quot;" />
+    <arguments value="-t &quot;loads an image from network&quot;" />
     <node-interpreter value="project" />
     <envs>
       <env name="NODE_NO_WARNINGS" value="1" />
