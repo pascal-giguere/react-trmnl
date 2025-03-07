@@ -1,7 +1,7 @@
 {
   "name": "react-trmnl",
   "description": "A React-based renderer for TRMNL (https://usetrmnl.com)",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "author": "Pascal Giguère",
   "homepage": "https://github.com/pascal-giguere/react-trmnl",
   "license": "ISC",

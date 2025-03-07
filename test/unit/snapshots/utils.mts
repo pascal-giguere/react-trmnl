@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { mkdir, writeFile } from "node:fs/promises";
 import type { ReactElement } from "react";
-import { readFileData } from "../../../src/rendering/filesystem.js";
+import { readFileData } from "../../../src/rendering/filesystem.mjs";
 import { ImageFormat, render } from "../../../src/index.mjs";
 
 const DIMENSIONS = { width: 800, height: 480 };
