@@ -1,3 +1,4 @@
+import { resolveImage } from "../loading/resolver.mjs";
 import type { LayoutProps } from "../layout/types.mjs";
 import type { NodeContent, SvgContent, ImageContent, TextProps, BoxProps, ImageProps, NoopContent } from "./types.mjs";
 import type { RawImage } from ".././rendering/types.mjs";
@@ -103,20 +104,20 @@ export class ReconcilerSvgNode extends ReconcilerNode {
 export class ReconcilerImageNode extends ReconcilerNode {
   content: ImageContent;
 
-  constructor(image: RawImage, dithering: Dithering, layout: LayoutProps) {
+  constructor(src: string, dithering: Dithering, layout: LayoutProps) {
     super(layout);
-    this.content = { image, dithering };
+    this.content = { src, dithering };
   }
 
   static fromImageProps({ src, width, height, top, left, dithering }: ImageProps): ReconcilerImageNode {
-    // TODO: Load image from src
-    const image: RawImage = { data: Buffer.alloc(0), width: 0, height: 0, channels: 1 };
-    return new ReconcilerImageNode(image, dithering, { dimensions: { width, height }, position: { top, left } });
+    return new ReconcilerImageNode(src, dithering, { dimensions: { width, height }, position: { top, left } });
   }
 
   override async draw(buffer: ImageBuffer): Promise<void> {
     const { dimensions, position } = this.layout;
-    const { image, dithering } = this.content;
+    const { src, dithering } = this.content;
+    // TODO Implement image cache
+    const image: RawImage = await resolveImage(src);
     await buffer.drawImage({ image, dimensions, position, dithering });
   }
 }

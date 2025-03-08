@@ -1,6 +1,8 @@
 import React from "react";
-import { Box, Color, Text } from "../../src/index.mjs";
+import { Box, Color, Image, Text } from "../../src/index.mjs";
 import { expectSnapshotMatch } from "./snapshots/utils.mjs";
+import { Dithering } from "../../src/rendering/dithering.mjs";
+import { flowersJpg } from "./assets/paths.mjs";
 
 it("renders React code matching snapshots", async () => {
   await expectSnapshotMatch(
@@ -14,7 +16,7 @@ it("renders React code matching snapshots", async () => {
       <Box
         width={150}
         height={150}
-        left={300}
+        left={100}
         top={300}
         backgroundColor={Color.White}
         borderColor={Color.Black}
@@ -24,7 +26,7 @@ it("renders React code matching snapshots", async () => {
       <Box
         width={150}
         height={150}
-        left={500}
+        left={300}
         top={300}
         backgroundColor={Color.White}
         borderColor={Color.Black}
@@ -33,6 +35,16 @@ it("renders React code matching snapshots", async () => {
       />
       <Box width={80} height={80} top={100} left={250} borderColor={Color.White} borderWidth={1} borderRadius={10} />
       <Box width={130} height={130} top={30} left={30} borderWidth={4} />
+      <Image src="https://picsum.photos/id/0/300/200" width={240} height={160} left={560} dithering={Dithering.None} />
+      <Image
+        src="https://picsum.photos/id/0/300/200"
+        width={240}
+        height={160}
+        top={160}
+        left={560}
+        dithering={Dithering.Atkinson}
+      />
+      <Image src={flowersJpg} width={240} height={160} top={320} left={560} dithering={Dithering.Atkinson} />
     </Box>,
     "test.bmp",
   );

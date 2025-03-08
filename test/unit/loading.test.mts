@@ -1,13 +1,25 @@
+import { flowersJpg } from "./assets/paths.mjs";
+import { readImage } from "../../src/loading/filesystem.mjs";
 import { fetchImage } from "../../src/loading/network.mjs";
 import type { RawImage } from "../../src/rendering/types.mjs";
 
-const IMAGE_WIDTH = 300;
-const IMAGE_HEIGHT = 200;
-const IMAGE_CHANNELS = 3;
+it("loads an image from the local filesystem", async () => {
+  const WIDTH = 2592,
+    HEIGHT = 1728,
+    CHANNELS = 3;
+  const image: RawImage = await readImage(flowersJpg);
+  expect(image.width).toBe(WIDTH);
+  expect(image.height).toBe(HEIGHT);
+  expect(image.data).toHaveLength(WIDTH * HEIGHT * CHANNELS);
+});
 
-it("loads an image from network", async () => {
-  const image: RawImage = await fetchImage(`https://picsum.photos/${IMAGE_WIDTH}/${IMAGE_HEIGHT}`);
-  expect(image.width).toBe(IMAGE_WIDTH);
-  expect(image.height).toBe(IMAGE_HEIGHT);
-  expect(image.data).toHaveLength(IMAGE_WIDTH * IMAGE_HEIGHT * IMAGE_CHANNELS);
+it("loads an image from the network", async () => {
+  const WIDTH = 300,
+    HEIGHT = 200,
+    CHANNELS = 3;
+  // TODO mock fetch response
+  const image: RawImage = await fetchImage(`https://picsum.photos/${WIDTH}/${HEIGHT}`);
+  expect(image.width).toBe(WIDTH);
+  expect(image.height).toBe(HEIGHT);
+  expect(image.data).toHaveLength(WIDTH * HEIGHT * CHANNELS);
 });

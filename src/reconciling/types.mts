@@ -3,7 +3,6 @@ import type { HostConfig } from "react-reconciler";
 import type { ReconcilerRoot } from "./root.mjs";
 import type { ReconcilerNode, ReconcilerNoopNode } from "./nodes.mjs";
 import type { TrmnlElement } from "./host.mjs";
-import type { RawImage } from ".././rendering/types.mjs";
 import type { Dithering } from ".././rendering/dithering.mjs";
 import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
 
@@ -59,7 +58,7 @@ export type SvgContent = {
 };
 
 export type ImageContent = {
-  image: RawImage;
+  src: string;
   dithering: Dithering;
 };
 
