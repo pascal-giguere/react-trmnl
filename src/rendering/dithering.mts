@@ -19,7 +19,7 @@ function atkinsonDither(image: RawBWImage): RawBWImage {
   const inData = Buffer.from(image.data);
   const outData = Buffer.alloc(image.data.length);
   for (let i = 0; i < inData.length; i++) {
-    const value = inData[i] < 129 ? 0 : 255;
+    const value = inData[i] < 128 ? 0 : 255;
     const error = Math.floor((inData[i] - value) / 8);
     inData[i + 1] += error;
     inData[i + 2] += error;

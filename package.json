@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@types/react-reconciler": "^0.31.0",
-    "bmp-ts": "^1.0.9",
+    "fast-bmp": "^2.0.1",
     "react-reconciler": "^0.31.0",
     "sharp": "^0.32.6"
   },
