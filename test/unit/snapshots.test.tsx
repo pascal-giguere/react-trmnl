@@ -49,3 +49,15 @@ it("renders React code matching snapshots", async () => {
     "test.bmp",
   );
 });
+
+it("renders React code matching snapshots - Dithering bug", async () => {
+  await expectSnapshotMatch(
+    <Box width={800} height={480}>
+      <Image src="https://picsum.photos/id/0/300/200" width={300} height={200} />
+      <Image src="https://picsum.photos/id/0/300/200" width={301} height={200} top={200} />
+      <Image src="https://picsum.photos/id/0/400/240" width={400} height={240} left={300} />
+      <Image src="https://picsum.photos/id/0/300/200" width={400} height={240} left={300} top={240} />
+    </Box>,
+    "dithering-bug.bmp",
+  );
+});
