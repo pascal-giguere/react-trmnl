@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, Color, Image, Text } from "../../src/index.mjs";
+import { Box, Color, Dithering, Image, Text } from "../../src/index.mjs";
 import { expectSnapshotMatch } from "./snapshots/utils.mjs";
-import { Dithering } from "../../src/rendering/dithering.mjs";
 import { flowersJpg } from "./assets/paths.mjs";
 
 describe("Snapshot tests", () => {
@@ -38,14 +37,14 @@ describe("Snapshot tests", () => {
         <Box width={80} height={80} top={100} left={250} borderColor={Color.White} borderWidth={1} borderRadius={10} />
         <Box width={130} height={130} top={30} left={30} borderWidth={4} />
         <Image
-          src="https://picsum.photos/id/0/300/200"
+          src="https://picsum.photos/id/1/300/200"
           width={240}
           height={160}
           left={560}
           dithering={Dithering.None}
         />
         <Image
-          src="https://picsum.photos/id/0/300/200"
+          src="https://picsum.photos/id/1/300/200"
           width={240}
           height={160}
           top={160}
@@ -63,24 +62,24 @@ describe("Snapshot tests", () => {
     const DIMENSIONS = { width: 800, height: 1500 };
     await expectSnapshotMatch(
       <Box width={0} height={0}>
-        <Image src="https://picsum.photos/id/0/400/300" width={400} height={300} top={0} dithering={Dithering.None} />
+        <Image src="https://picsum.photos/id/57/400/300" width={400} height={300} top={0} dithering={Dithering.None} />
         <Image
-          src="https://picsum.photos/id/0/400/300"
+          src="https://picsum.photos/id/57/400/300"
           width={400}
           height={300}
           top={300}
           dithering={Dithering.Atkinson}
         />
-        <Image src="https://picsum.photos/id/0/400/300" width={400} height={300} top={600} dithering={Dithering.Box} />
+        <Image src="https://picsum.photos/id/57/400/300" width={400} height={300} top={600} dithering={Dithering.Box} />
         <Image
-          src="https://picsum.photos/id/0/400/300"
+          src="https://picsum.photos/id/57/400/300"
           width={400}
           height={300}
           top={900}
           dithering={Dithering.Burkes}
         />
         <Image
-          src="https://picsum.photos/id/0/400/300"
+          src="https://picsum.photos/id/57/400/300"
           width={400}
           height={300}
           left={400}
@@ -88,7 +87,7 @@ describe("Snapshot tests", () => {
           dithering={Dithering.FloydSteinberg}
         />
         <Image
-          src="https://picsum.photos/id/0/400/300"
+          src="https://picsum.photos/id/57/400/300"
           width={400}
           height={300}
           left={400}
@@ -96,7 +95,7 @@ describe("Snapshot tests", () => {
           dithering={Dithering.JarvisJudiceNinke}
         />
         <Image
-          src="https://picsum.photos/id/0/400/300"
+          src="https://picsum.photos/id/57/400/300"
           width={400}
           height={300}
           left={400}
@@ -104,7 +103,7 @@ describe("Snapshot tests", () => {
           dithering={Dithering.Pigeon}
         />
         <Image
-          src="https://picsum.photos/id/0/400/300"
+          src="https://picsum.photos/id/57/400/300"
           width={400}
           height={300}
           left={400}
@@ -113,7 +112,7 @@ describe("Snapshot tests", () => {
         />
         {/* Image downscale */}
         <Image
-          src="https://picsum.photos/id/0/600/450"
+          src="https://picsum.photos/id/57/1200/900"
           width={400}
           height={300}
           top={1200}
@@ -121,7 +120,7 @@ describe("Snapshot tests", () => {
         />
         {/* Image upscale */}
         <Image
-          src="https://picsum.photos/id/0/300/225"
+          src="https://picsum.photos/id/57/100/75"
           width={400}
           height={300}
           top={1200}
