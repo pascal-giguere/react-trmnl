@@ -7,7 +7,6 @@ export enum Dithering {
   Atkinson = "atkinson",
   Box = "box",
   Burkes = "burkes",
-  Diamond = "diamond",
   FloydSteinberg = "floyd-steinberg",
   JarvisJudiceNinke = "jarvis-judice-ninke",
   Pigeon = "pigeon",
@@ -47,14 +46,6 @@ const Burkes: Diffusion = {
     [2, 1, 2],
   ],
   errorScale: 32,
-};
-
-const Diamond: Diffusion = {
-  errorDiffusion: [
-    [1, 0, 1],
-    [0, 1, 1],
-  ],
-  errorScale: 2,
 };
 
 const FloydSteinberg: Diffusion = {
@@ -120,7 +111,6 @@ const diffusionsByAlgorithm: { [key in Dithering]: Diffusion | null } = {
   [Dithering.Atkinson]: Atkinson,
   [Dithering.Box]: Box,
   [Dithering.Burkes]: Burkes,
-  [Dithering.Diamond]: Diamond,
   [Dithering.FloydSteinberg]: FloydSteinberg,
   [Dithering.JarvisJudiceNinke]: JarviceJudiceNinke,
   [Dithering.Pigeon]: Pigeon,
