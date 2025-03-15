@@ -7,7 +7,7 @@ const TestComponent = (): ReactElement => (
   </Text>
 );
 const DIMENSIONS = { width: 800, height: 480 };
-const BMP_HEADER_SIZE = 64;
+const BMP_HEADER_SIZE = 146;
 
 it("renders a raw image with the appropriate size", async () => {
   const image: Buffer = await render(<TestComponent />, { ...DIMENSIONS, format: ImageFormat.Raw });

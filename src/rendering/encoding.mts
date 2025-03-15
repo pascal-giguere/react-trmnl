@@ -1,4 +1,4 @@
-import { encode as bmpEncode, BmpCompression } from "bmp-ts";
+import { encode as bmpEncode } from "fast-bmp";
 import sharp from "sharp";
 import type { RawBWImage } from "./types.mjs";
 import { OutputImageFormat } from "./images.mjs";
@@ -16,24 +16,26 @@ export async function encodeImage(image: RawBWImage, format: OutputImageFormat):
 
 function encodeBMP(image: RawBWImage): Buffer {
   const { data, width, height } = image;
-  const abgrData = Buffer.alloc(data.length * 4);
-  for (let i = 0; i < data.length; i++) {
-    abgrData[i * 4] = 255;
-    abgrData[i * 4 + 1] = abgrData[i * 4 + 2] = abgrData[i * 4 + 3] = data[i];
+  const inputBits: Uint8Array = data.map((byte) => (byte < 128 ? 0 : 1));
+  const inputBytes = new Uint8Array(Math.ceil((width * height) / 8));
+  for (let i = 0; i < inputBits.length; i++) {
+    inputBytes[Math.floor(i / 8)] |= inputBits[i] << (7 - (i % 8));
   }
-  const { data: out } = bmpEncode({
-    data: abgrData,
+  const outputBytes: Uint8Array = bmpEncode({
     width,
     height,
-    bitPP: 1,
-    compression: BmpCompression.NONE,
+    data: inputBytes,
+    bitDepth: 1,
+    components: 1,
+    channels: 1,
   });
-  return out;
+  return Buffer.from(outputBytes);
 }
 
 async function encodePNG(image: RawBWImage): Promise<Buffer> {
   const { data, width, height } = image;
-  return sharp(data, {
+  const inputBytes: Uint8Array = data.map((byte) => (byte < 128 ? 0 : 255));
+  return sharp(Buffer.from(inputBytes), {
     raw: { width, height, channels: 1 },
   })
     .png({ colours: 2 })

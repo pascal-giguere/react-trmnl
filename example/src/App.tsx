@@ -1,5 +1,5 @@
 import React, { type ReactElement } from "react";
-import { render, Box, Text, Image, Color } from "react-trmnl";
+import { Box, Color, Image, render, Text } from "react-trmnl";
 
 const App = (): ReactElement => {
   return (
@@ -7,7 +7,7 @@ const App = (): ReactElement => {
       <Text width={400} height={200}>
         Hello, world!
       </Text>
-      <Image src="foo.png" width={400} height={200} />
+      <Image src="https://picsum.photos/id/0/400/240" width={400} height={240} left={400} />
     </Box>
   );
 };
