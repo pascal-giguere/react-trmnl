@@ -1,22 +1,17 @@
 import React, { type ReactElement } from "react";
 import { Dithering } from "../.././rendering/dithering.mjs";
+import type { ImageStyle } from "../../styling/types.mjs";
+import type { YogaStyle } from "../../layout/types.mjs";
 
 interface Props {
   src: string;
-  width: number;
-  height: number;
-  left?: number;
-  top?: number;
-  dithering?: Dithering;
+  style?: Partial<ImageStyle> & YogaStyle;
 }
 
-export const Image = ({
-  src,
-  width,
-  height,
-  left = 0,
-  top = 0,
-  dithering = Dithering.Atkinson,
-}: Props): ReactElement => (
-  <trmnl-image src={src} width={width} height={height} left={left} top={top} dithering={dithering} />
+const DEFAULT_STYLE: ImageStyle = {
+  dithering: Dithering.Atkinson,
+};
+
+export const Image = ({ src, style }: Props): ReactElement => (
+  <trmnl-image src={src} style={{ ...DEFAULT_STYLE, ...style }} />
 );

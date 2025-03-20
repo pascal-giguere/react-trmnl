@@ -1,7 +1,13 @@
 import type { OpaqueHandle } from "react-reconciler";
 import { DefaultEventPriority } from "react-reconciler/constants.js";
 import type { ReconcilerRoot } from "./root.mjs";
-import { ReconcilerImageNode, ReconcilerNode, ReconcilerNoopNode, ReconcilerSvgNode } from "./nodes.mjs";
+import {
+  ReconcilerNode,
+  ReconcilerTextNode,
+  ReconcilerBoxNode,
+  ReconcilerImageNode,
+  ReconcilerNoopNode,
+} from "./nodes.mjs";
 import type {
   BoxProps,
   HostContext,
@@ -50,11 +56,11 @@ export const host: ReconcilerHostConfig = {
   ): Instance => {
     switch (type) {
       case TrmnlElement.Text:
-        return ReconcilerSvgNode.fromTextProps(props as TextProps);
+        return new ReconcilerTextNode(props as TextProps);
       case TrmnlElement.Box:
-        return ReconcilerSvgNode.fromBoxProps(props as BoxProps);
+        return new ReconcilerBoxNode(props as BoxProps);
       case TrmnlElement.Image:
-        return ReconcilerImageNode.fromImageProps(props as ImageProps);
+        return new ReconcilerImageNode(props as ImageProps);
       default:
         throw new Error(`JSX element '<${type}>' is not supported by react-trmnl.`);
     }

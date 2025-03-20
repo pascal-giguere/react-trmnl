@@ -25,7 +25,9 @@ export class ReconcilerRoot {
         if (!this.rootNode) {
           throw new Error("Root node not set");
         }
+        this.rootNode.yogaNode.calculateLayout("auto", "auto");
         await this.drawNode(this.rootNode);
+        this.rootNode.yogaNode.freeRecursive();
         resolve();
       });
     });

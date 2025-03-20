@@ -1,42 +1,22 @@
 import React, { type ReactElement } from "react";
 import { Color } from "../.././rendering/colors.mjs";
-import { type Font, DefaultFont } from "../.././rendering/fonts.mjs";
+import { DefaultFont } from "../.././rendering/fonts.mjs";
+import type { TextStyle } from "../../styling/types.mjs";
+import type { YogaStyle } from "../../layout/types.mjs";
 
 interface Props {
   children: string;
-  width: number;
-  height: number;
-  left?: number;
-  top?: number;
-  color?: Color;
-  fontSize?: number;
-  fontFamily?: Font;
-  borderColor?: Color;
-  borderWidth?: number;
+  style?: Partial<TextStyle> & YogaStyle;
 }
 
-export const Text = ({
-  children,
-  width,
-  height,
-  left = 0,
-  top = 0,
-  color = Color.Black,
-  fontSize = 12,
-  fontFamily = DefaultFont.Sans,
-  borderColor = Color.None,
-  borderWidth = 1,
-}: Props): ReactElement => (
-  <trmnl-text
-    children={children}
-    width={width}
-    height={height}
-    left={left}
-    top={top}
-    color={color}
-    fontSize={fontSize}
-    fontFamily={fontFamily}
-    borderColor={borderColor}
-    borderWidth={borderWidth}
-  />
+const DEFAULT_STYLE: TextStyle = {
+  color: Color.Black,
+  fontSize: 12,
+  fontFamily: DefaultFont.Sans,
+  borderColor: Color.None,
+  borderWidth: 0,
+};
+
+export const Text = ({ children, style }: Props): ReactElement => (
+  <trmnl-text style={{ ...DEFAULT_STYLE, ...style }} children={children} />
 );

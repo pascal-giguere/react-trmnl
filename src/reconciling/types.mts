@@ -3,8 +3,8 @@ import type { HostConfig } from "react-reconciler";
 import type { ReconcilerRoot } from "./root.mjs";
 import type { ReconcilerNode, ReconcilerNoopNode } from "./nodes.mjs";
 import type { TrmnlElement } from "./host.mjs";
-import type { Dithering } from ".././rendering/dithering.mjs";
-import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
+import type { TextStyle, BoxStyle, ImageStyle } from "../styling/types.mjs";
+import type { YogaStyle } from "../layout/types.mjs";
 
 export type InstanceType = TrmnlElement;
 export type Props = TextProps | BoxProps | ImageProps;
@@ -29,37 +29,8 @@ export type ReconcilerHostConfig = HostConfig<
   unknown
 >;
 
-type BaseProps = {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-};
+export type TextProps = { style: TextStyle & YogaStyle; children: string };
 
-export type TextProps = TextStyle &
-  BaseProps & {
-    children: string;
-  };
+export type BoxProps = { style: BoxStyle & YogaStyle; children?: JSX.Element | JSX.Element[] };
 
-export type BoxProps = BoxStyle &
-  BaseProps & {
-    children?: JSX.Element | JSX.Element[];
-  };
-
-export type ImageProps = ImageStyle &
-  BaseProps & {
-    src: string;
-  };
-
-export type NodeContent = SvgContent | ImageContent | NoopContent;
-
-export type SvgContent = {
-  svg: string;
-};
-
-export type ImageContent = {
-  src: string;
-  dithering: Dithering;
-};
-
-export type NoopContent = unknown;
+export type ImageProps = { style: ImageStyle & YogaStyle; src: string };

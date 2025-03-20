@@ -27,8 +27,12 @@ export class ImageBuffer {
     const { top = 0, left = 0 } = position;
     if (width === 0 || height === 0) return;
 
+    // Clip SVG to fit within the buffer
+    const svgWidth: number = Math.min(width, this.width - left);
+    const svgHeight: number = Math.min(height, this.height - top);
+
     const { data: svgData, info: svgInfo } = await sharp(
-      Buffer.from(`<svg width="${width}" height="${height}">${svg}</svg>`),
+      Buffer.from(`<svg width="${svgWidth}" height="${svgHeight}">${svg}</svg>`),
     )
       .raw()
       .toBuffer({ resolveWithObject: true });
@@ -41,7 +45,7 @@ export class ImageBuffer {
           ])
           .toColourspace("b-w")
           .toBuffer()
-      ).map((value) => (value < 128 ? 0 : 255)),
+      ).map((value) => (value < 128 ? 0 : 255)), // TODO remove threshold
     );
   }
 

@@ -1,27 +1,58 @@
+import Yoga, { Display, type Node as YogaNode } from "yoga-layout";
 import { resolveImage } from "../loading/resolver.mjs";
-import type { LayoutProps } from "../layout/types.mjs";
-import type { NodeContent, SvgContent, ImageContent, TextProps, BoxProps, ImageProps, NoopContent } from "./types.mjs";
+import { applyYogaStyle } from "../layout/style.mjs";
+import type { LayoutResults, YogaStyle } from "../layout/types.mjs";
 import type { RawImage } from ".././rendering/types.mjs";
-import type { Dithering } from ".././rendering/dithering.mjs";
 import type { ImageBuffer } from ".././rendering/compositing.mjs";
+import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
+import type { BoxProps, ImageProps, TextProps } from "./types.mjs";
 
 export abstract class ReconcilerNode {
-  abstract content: NodeContent;
   children: ReconcilerNode[] = [];
-  layout: LayoutProps;
+  yogaNode: YogaNode;
 
-  protected constructor(layout: LayoutProps) {
-    this.layout = layout;
+  protected constructor(style: YogaStyle) {
+    const node: YogaNode = Yoga.Node.create();
+    applyYogaStyle(node, style);
+    this.yogaNode = node;
   }
 
   abstract draw(buffer: ImageBuffer): Promise<void>;
 
+  protected getLayoutResults(): LayoutResults {
+    return {
+      dimensions: {
+        width: this.yogaNode.getComputedWidth(),
+        height: this.yogaNode.getComputedHeight(),
+      },
+      position: {
+        top: this.yogaNode.getComputedTop(),
+        left: this.yogaNode.getComputedLeft(),
+      },
+      display: (() => {
+        const displayValue = this.yogaNode.getDisplay();
+        switch (displayValue) {
+          case Display.Flex:
+            return "flex";
+          case Display.None:
+            return "none";
+          case Display.Contents:
+            return "contents";
+          default:
+            throw new Error(`Unknown display value: '${displayValue}'`);
+        }
+      })(),
+    };
+  }
+
   appendChild(child: ReconcilerNode): void {
     this.children.push(child);
+    this.yogaNode.insertChild(child.yogaNode, this.yogaNode.getChildCount());
   }
 
   removeChild(child: ReconcilerNode): void {
     this.children = this.children.filter((c) => c !== child);
+    this.yogaNode.removeChild(child.yogaNode);
   }
 
   insertBefore(child: ReconcilerNode, beforeChild: ReconcilerNode): void {
@@ -30,29 +61,26 @@ export abstract class ReconcilerNode {
       throw new Error("Child not found");
     }
     this.children.splice(index, 0, child);
+    this.yogaNode.insertChild(child.yogaNode, index);
   }
 }
 
-export class ReconcilerSvgNode extends ReconcilerNode {
-  content: SvgContent;
+export class ReconcilerTextNode extends ReconcilerNode {
+  private readonly text: string;
+  private readonly textStyle: TextStyle;
 
-  constructor(svg: string, layout: LayoutProps) {
-    super(layout);
-    this.content = { svg };
+  constructor({ children, style }: TextProps) {
+    const { color, fontSize, fontFamily, borderColor, borderWidth, ...yogaStyle } = style;
+    super(yogaStyle);
+    this.text = children;
+    this.textStyle = { color, fontSize, fontFamily, borderColor, borderWidth };
   }
 
-  static fromTextProps({
-    children,
-    width,
-    height,
-    top,
-    left,
-    color,
-    fontSize,
-    fontFamily,
-    borderColor,
-    borderWidth,
-  }: TextProps): ReconcilerSvgNode {
+  override async draw(buffer: ImageBuffer): Promise<void> {
+    const { dimensions, position, display }: LayoutResults = this.getLayoutResults();
+    if (display === "none") return;
+
+    const { color, fontSize, fontFamily, borderColor, borderWidth } = this.textStyle;
     const svg =
       `<text` +
       ` fill="${color}"` +
@@ -63,25 +91,32 @@ export class ReconcilerSvgNode extends ReconcilerNode {
       ` stroke-width="${borderWidth * 2}"` +
       ` paint-order="stroke"` +
       `>` +
-      `${children}` +
+      `${this.text}` +
       `</text>`;
-    return new ReconcilerSvgNode(svg, { dimensions: { width, height }, position: { top, left } });
+
+    console.log(svg);
+    await buffer.drawSvg({ svg, dimensions, position });
+  }
+}
+
+export class ReconcilerBoxNode extends ReconcilerNode {
+  private readonly boxStyle: BoxStyle;
+
+  constructor({ style }: BoxProps) {
+    const { backgroundColor, borderColor, borderWidth, borderRadius, ...yogaStyle } = style;
+    super(yogaStyle);
+    this.boxStyle = { backgroundColor, borderColor, borderWidth, borderRadius };
   }
 
-  static fromBoxProps({
-    width,
-    height,
-    top,
-    left,
-    backgroundColor,
-    borderColor,
-    borderWidth,
-    borderRadius,
-  }: BoxProps): ReconcilerSvgNode {
+  override async draw(buffer: ImageBuffer): Promise<void> {
+    const { dimensions, position, display }: LayoutResults = this.getLayoutResults();
+    if (display === "none") return;
+
+    const { backgroundColor, borderColor, borderWidth, borderRadius } = this.boxStyle;
     const svg =
       `<rect` +
-      ` width="${width - borderWidth}"` +
-      ` height="${height - borderWidth}"` +
+      ` width="${dimensions.width - borderWidth}"` +
+      ` height="${dimensions.height - borderWidth}"` +
       ` x="${borderWidth / 2}"` +
       ` y="${borderWidth / 2}"` +
       ` fill="${backgroundColor}"` +
@@ -90,43 +125,37 @@ export class ReconcilerSvgNode extends ReconcilerNode {
       ` stroke="${borderColor}"` +
       ` stroke-width="${borderWidth}"` +
       ` />`;
-    return new ReconcilerSvgNode(svg, { dimensions: { width, height }, position: { top, left } });
-  }
 
-  override async draw(buffer: ImageBuffer): Promise<void> {
-    const { dimensions, position } = this.layout;
-    const { svg } = this.content;
     console.log(svg);
     await buffer.drawSvg({ svg, dimensions, position });
   }
 }
 
 export class ReconcilerImageNode extends ReconcilerNode {
-  content: ImageContent;
+  private readonly src: string;
+  private readonly imageStyle: ImageStyle;
 
-  constructor(src: string, dithering: Dithering, layout: LayoutProps) {
-    super(layout);
-    this.content = { src, dithering };
-  }
-
-  static fromImageProps({ src, width, height, top, left, dithering }: ImageProps): ReconcilerImageNode {
-    return new ReconcilerImageNode(src, dithering, { dimensions: { width, height }, position: { top, left } });
+  constructor({ src, style }: ImageProps) {
+    const { dithering, ...yogaStyle } = style;
+    super(yogaStyle);
+    this.src = src;
+    this.imageStyle = { dithering };
   }
 
   override async draw(buffer: ImageBuffer): Promise<void> {
-    const { dimensions, position } = this.layout;
-    const { src, dithering } = this.content;
+    const { dimensions, position, display }: LayoutResults = this.getLayoutResults();
+    if (display === "none") return;
+
+    const { dithering } = this.imageStyle;
     // TODO Implement image cache
-    const image: RawImage = await resolveImage(src);
+    const image: RawImage = await resolveImage(this.src);
     await buffer.drawImage({ image, dimensions, position, dithering });
   }
 }
 
 export class ReconcilerNoopNode extends ReconcilerNode {
-  content: NoopContent;
-
   constructor() {
-    super({ dimensions: { width: 0, height: 0 }, position: { top: 0, left: 0 } });
+    super({});
   }
 
   override async draw(_buffer: ImageBuffer): Promise<void> {}
