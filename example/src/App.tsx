@@ -3,11 +3,17 @@ import { Box, Color, Image, render, Text } from "react-trmnl";
 
 const App = (): ReactElement => {
   return (
-    <Box left={20} top={50} width={400} height={200} backgroundColor={Color.White} borderColor={Color.Black}>
-      <Text width={400} height={200}>
-        Hello, world!
-      </Text>
-      <Image src="https://picsum.photos/id/0/400/240" width={400} height={240} left={400} />
+    <Box
+      style={{
+        marginLeft: 20,
+        marginTop: 50,
+        width: 400,
+        height: 200,
+        borderWidth: 1,
+      }}
+    >
+      <Text style={{ width: 400, height: 200, color: Color.Black }}>Hello, world!</Text>
+      <Image src="https://picsum.photos/id/0/400/240" style={{ width: 400, height: 200, marginLeft: 400 }} />
     </Box>
   );
 };

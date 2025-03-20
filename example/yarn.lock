@@ -314,13 +314,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bmp-ts@npm:^1.0.9":
-  version: 1.0.9
-  resolution: "bmp-ts@npm:1.0.9"
-  checksum: 10c0/4b7f504d41a647e8b0560b77da3ea6c86c5dbb3b256320dde1a2c34dcc776ac3652c7aa12c32c2782f52a3be86da6bafb4178b4af5089163e22f0b4f5837a307
-  languageName: node
-  linkType: hard
-
 "brace-expansion@npm:^2.0.1":
   version: 2.0.1
   resolution: "brace-expansion@npm:2.0.1"
@@ -566,6 +559,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-bmp@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "fast-bmp@npm:2.0.1"
+  dependencies:
+    iobuffer: "npm:^5.1.0"
+  checksum: 10c0/ee00c02796ce53098261c1de709f1a2918083c2f561e69dba3b9dfe1078591bbedb0ae832eb1ee2d2c1ca435973a6b91e08368968635cb0c36556fa996c58a74
+  languageName: node
+  linkType: hard
+
 "fast-decode-uri-component@npm:^1.0.1":
   version: 1.0.1
   resolution: "fast-decode-uri-component@npm:1.0.1"
@@ -791,6 +793,13 @@ __metadata:
   version: 1.3.8
   resolution: "ini@npm:1.3.8"
   checksum: 10c0/ec93838d2328b619532e4f1ff05df7909760b6f66d9c9e2ded11e5c1897d6f2f9980c54dd638f88654b00919ce31e827040631eab0a3969e4d1abefa0719516a
+  languageName: node
+  linkType: hard
+
+"iobuffer@npm:^5.1.0":
+  version: 5.4.0
+  resolution: "iobuffer@npm:5.4.0"
+  checksum: 10c0/1b3f9a5ea158bc63f038b374b42832acdb9db13ea9cfa4ed78723f30894986442f6c033dff4ae2fdf34724bf0fe432e3b86c11ca82049568c58b8d7fb47a6ac2
   languageName: node
   linkType: hard
 
@@ -1333,7 +1342,7 @@ __metadata:
   resolution: "react-trmnl@portal:..::locator=react-trmnl-example%40workspace%3A."
   dependencies:
     "@types/react-reconciler": "npm:^0.31.0"
-    bmp-ts: "npm:^1.0.9"
+    fast-bmp: "npm:^2.0.1"
     react-reconciler: "npm:^0.31.0"
     sharp: "npm:^0.32.6"
     yoga-layout: "npm:^3.2.1"
