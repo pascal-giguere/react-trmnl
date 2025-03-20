@@ -1,7 +1,8 @@
 /* Rendering */
-export { render, type RenderOptions } from "././rendering/render.mjs";
+export { render } from "././rendering/render.mjs";
 
 /* Components */
+export { Trmnl } from "./components/primitives/Trmnl.js";
 export { Text } from "./components/primitives/Text.js";
 export { Box } from "./components/primitives/Box.js";
 export { Image } from "./components/primitives/Image.js";

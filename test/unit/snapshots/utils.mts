@@ -3,18 +3,13 @@ import { mkdir, writeFile } from "node:fs/promises";
 import type { ReactElement } from "react";
 import { readFileData } from "../../../src/loading/filesystem.mjs";
 import { ImageFormat, render } from "../../../src/index.mjs";
-import type { RenderingDimensions } from "../../../src/rendering/types.mjs";
 
 const snapshotPath: string = join(process.cwd(), "/test/unit/snapshots/");
 const expectedPath: string = join(snapshotPath, "/expected/");
 const actualPath: string = join(snapshotPath, "/actual/");
 
-export async function expectSnapshotMatch(
-  element: ReactElement,
-  dimensions: RenderingDimensions,
-  snapshotFilename: string,
-): Promise<void> {
-  const rendered: Buffer = await render(element, { ...dimensions, format: ImageFormat.BMP });
+export async function expectSnapshotMatch(element: ReactElement, snapshotFilename: string): Promise<void> {
+  const rendered: Buffer = await render(element, ImageFormat.BMP);
   await writeSnapshotData(snapshotFilename, rendered);
   const expected: Buffer = await readSnapshotData(snapshotFilename);
   expect(rendered.toString("base64")).toEqual(expected.toString("base64"));

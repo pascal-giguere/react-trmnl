@@ -7,7 +7,7 @@ import type { TextStyle, BoxStyle, ImageStyle } from "../styling/types.mjs";
 import type { YogaStyle } from "../layout/types.mjs";
 
 export type InstanceType = TrmnlElement;
-export type Props = TextProps | BoxProps | ImageProps;
+export type Props = RootProps | TextProps | BoxProps | ImageProps;
 export type Instance = ReconcilerNode;
 export type TextInstance = ReconcilerNoopNode;
 export type HostContext = object;
@@ -28,6 +28,8 @@ export type ReconcilerHostConfig = HostConfig<
   unknown,
   unknown
 >;
+
+export type RootProps = { width: number; height: number; children: JSX.Element | JSX.Element[] };
 
 export type TextProps = { style: TextStyle & YogaStyle; children: string };
 

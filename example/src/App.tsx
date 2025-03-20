@@ -1,8 +1,8 @@
 import React, { type ReactElement } from "react";
-import { Box, Color, Image, render, Text } from "react-trmnl";
+import { Trmnl, Text, Box, Image, Color } from "react-trmnl";
 
-const App = (): ReactElement => {
-  return (
+export const App = (): ReactElement => (
+  <Trmnl>
     <Box
       style={{
         marginLeft: 20,
@@ -15,7 +15,5 @@ const App = (): ReactElement => {
       <Text style={{ width: 400, height: 200, color: Color.Black }}>Hello, world!</Text>
       <Image src="https://picsum.photos/id/0/400/240" style={{ width: 400, height: 200, marginLeft: 400 }} />
     </Box>
-  );
-};
-
-export const renderApp = () => render(<App />);
+  </Trmnl>
+);

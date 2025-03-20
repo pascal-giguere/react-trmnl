@@ -5,7 +5,7 @@ import type { LayoutResults, YogaStyle } from "../layout/types.mjs";
 import type { RawImage } from ".././rendering/types.mjs";
 import type { ImageBuffer } from ".././rendering/compositing.mjs";
 import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
-import type { BoxProps, ImageProps, TextProps } from "./types.mjs";
+import type { BoxProps, ImageProps, RootProps, TextProps } from "./types.mjs";
 
 export abstract class ReconcilerNode {
   children: ReconcilerNode[] = [];
@@ -63,6 +63,14 @@ export abstract class ReconcilerNode {
     this.children.splice(index, 0, child);
     this.yogaNode.insertChild(child.yogaNode, index);
   }
+}
+
+export class ReconcilerRootNode extends ReconcilerNode {
+  constructor({ width, height }: RootProps) {
+    super({ width, height });
+  }
+
+  override async draw(_buffer: ImageBuffer): Promise<void> {}
 }
 
 export class ReconcilerTextNode extends ReconcilerNode {

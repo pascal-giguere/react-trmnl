@@ -3,6 +3,7 @@ import { DefaultEventPriority } from "react-reconciler/constants.js";
 import type { ReconcilerRoot } from "./root.mjs";
 import {
   ReconcilerNode,
+  ReconcilerRootNode,
   ReconcilerTextNode,
   ReconcilerBoxNode,
   ReconcilerImageNode,
@@ -16,12 +17,14 @@ import type {
   InstanceType,
   Props,
   ReconcilerHostConfig,
+  RootProps,
   TextInstance,
   TextProps,
   UpdatePayload,
 } from "./types.mjs";
 
 export enum TrmnlElement {
+  Root = "trmnl-root",
   Text = "trmnl-text",
   Box = "trmnl-box",
   Image = "trmnl-image",
@@ -55,6 +58,8 @@ export const host: ReconcilerHostConfig = {
     _currentHostContext: HostContext,
   ): Instance => {
     switch (type) {
+      case TrmnlElement.Root:
+        return new ReconcilerRootNode(props as RootProps);
       case TrmnlElement.Text:
         return new ReconcilerTextNode(props as TextProps);
       case TrmnlElement.Box:
