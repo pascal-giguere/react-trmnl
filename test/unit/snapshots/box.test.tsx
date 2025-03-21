@@ -4,7 +4,7 @@ import { expectSnapshotMatch } from "./utils.mjs";
 
 it("renders the <Box> component", async () => {
   await expectSnapshotMatch(
-    <Trmnl width={480} height={480} style={{ flexDirection: "column" }}>
+    <Trmnl width={560} height={480} style={{ flexDirection: "column" }}>
       <Box
         style={{
           flex: 1,
@@ -17,6 +17,7 @@ it("renders the <Box> component", async () => {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Box style={{ height: 50, width: 50, backgroundColor: Color.Black }} />
@@ -35,11 +36,15 @@ it("renders the <Box> component", async () => {
           <Box
             style={{ height: 50, width: 50, backgroundColor: Color.White, borderColor: Color.Black, borderWidth: 10 }}
           />
+          <Box
+            style={{ height: 35, width: 65, backgroundColor: Color.White, borderColor: Color.Black, borderWidth: 10 }}
+          />
         </Box>
         <Box
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Box style={{ height: 50, width: 50, backgroundColor: Color.Black, borderRadius: 10 }} />
@@ -93,14 +98,25 @@ it("renders the <Box> component", async () => {
               borderRadius: 10,
             }}
           />
+          <Box
+            style={{
+              height: 35,
+              width: 65,
+              backgroundColor: Color.White,
+              borderColor: Color.Black,
+              borderWidth: 10,
+              borderRadius: 10,
+            }}
+          />
         </Box>
         <Box
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Box style={{ height: 50, width: 50, backgroundColor: Color.Black, borderRadius: 50 }} />
+          <Box style={{ height: 50, width: 50, backgroundColor: Color.Black, borderRadius: 25 }} />
           <Box
             style={{
               height: 50,
@@ -108,7 +124,7 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.Black,
               borderColor: Color.White,
               borderWidth: 5,
-              borderRadius: 50,
+              borderRadius: 25,
             }}
           />
           <Box
@@ -118,7 +134,7 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.White,
               borderColor: Color.Black,
               borderWidth: 1,
-              borderRadius: 50,
+              borderRadius: 25,
             }}
           />
           <Box
@@ -128,7 +144,7 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.None,
               borderColor: Color.Black,
               borderWidth: 2,
-              borderRadius: 50,
+              borderRadius: 25,
             }}
           />
           <Box
@@ -138,7 +154,7 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.White,
               borderColor: Color.Black,
               borderWidth: 4,
-              borderRadius: 50,
+              borderRadius: 25,
             }}
           />
           <Box
@@ -148,7 +164,17 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.White,
               borderColor: Color.Black,
               borderWidth: 10,
-              borderRadius: 50,
+              borderRadius: 25,
+            }}
+          />
+          <Box
+            style={{
+              height: 35,
+              width: 65,
+              backgroundColor: Color.White,
+              borderColor: Color.Black,
+              borderWidth: 10,
+              borderRadius: 25,
             }}
           />
         </Box>
@@ -165,6 +191,7 @@ it("renders the <Box> component", async () => {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Box style={{ height: 50, width: 50, backgroundColor: Color.White }} />
@@ -183,11 +210,15 @@ it("renders the <Box> component", async () => {
           <Box
             style={{ height: 50, width: 50, backgroundColor: Color.Black, borderColor: Color.White, borderWidth: 10 }}
           />
+          <Box
+            style={{ height: 35, width: 65, backgroundColor: Color.Black, borderColor: Color.White, borderWidth: 10 }}
+          />
         </Box>
         <Box
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Box style={{ height: 50, width: 50, backgroundColor: Color.White, borderRadius: 10 }} />
@@ -241,14 +272,25 @@ it("renders the <Box> component", async () => {
               borderRadius: 10,
             }}
           />
+          <Box
+            style={{
+              height: 35,
+              width: 65,
+              backgroundColor: Color.Black,
+              borderColor: Color.White,
+              borderWidth: 10,
+              borderRadius: 10,
+            }}
+          />
         </Box>
         <Box
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Box style={{ height: 50, width: 50, backgroundColor: Color.White, borderRadius: 50 }} />
+          <Box style={{ height: 50, width: 50, backgroundColor: Color.White, borderRadius: 25 }} />
           <Box
             style={{
               height: 50,
@@ -256,7 +298,7 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.White,
               borderColor: Color.Black,
               borderWidth: 5,
-              borderRadius: 50,
+              borderRadius: 25,
             }}
           />
           <Box
@@ -266,7 +308,7 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.Black,
               borderColor: Color.White,
               borderWidth: 1,
-              borderRadius: 50,
+              borderRadius: 25,
             }}
           />
           <Box
@@ -276,7 +318,7 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.None,
               borderColor: Color.White,
               borderWidth: 2,
-              borderRadius: 50,
+              borderRadius: 25,
             }}
           />
           <Box
@@ -286,7 +328,7 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.Black,
               borderColor: Color.White,
               borderWidth: 4,
-              borderRadius: 50,
+              borderRadius: 25,
             }}
           />
           <Box
@@ -296,7 +338,17 @@ it("renders the <Box> component", async () => {
               backgroundColor: Color.Black,
               borderColor: Color.White,
               borderWidth: 10,
-              borderRadius: 50,
+              borderRadius: 25,
+            }}
+          />
+          <Box
+            style={{
+              height: 35,
+              width: 65,
+              backgroundColor: Color.Black,
+              borderColor: Color.White,
+              borderWidth: 10,
+              borderRadius: 25,
             }}
           />
         </Box>
