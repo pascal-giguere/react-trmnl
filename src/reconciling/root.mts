@@ -1,50 +1,38 @@
 import { type ReactNode } from "react";
 import ReactReconciler, { type OpaqueRoot } from "react-reconciler";
 import { host } from "./host.mjs";
-import { ImageBuffer } from ".././rendering/compositing.mjs";
-import type { RawBWImage, RenderingDimensions, RenderingPosition } from ".././rendering/types.mjs";
-import { ReconcilerNode } from "./nodes.mjs";
-import type { LayoutResults } from "../layout/types.mjs";
+import type { RawBWImage } from ".././rendering/types.mjs";
+import type { ReconcilerRootNode } from "./nodes.mjs";
 
 const RECONCILER_ID_PREFIX = "react-trmnl";
 
 const reconciler = ReactReconciler(host);
 
 export class ReconcilerRoot {
-  private readonly buffer: ImageBuffer;
   private rootContainer: OpaqueRoot;
-  private rootNode: ReconcilerNode | null = null;
+  private rootNode: ReconcilerRootNode | null = null;
 
-  constructor(dimensions: RenderingDimensions) {
-    this.buffer = new ImageBuffer(dimensions);
+  constructor() {
     this.initContainer();
   }
 
-  async render(element: ReactNode): Promise<void> {
+  async render(element: ReactNode): Promise<RawBWImage> {
     return new Promise((resolve) => {
       reconciler.updateContainer(element, this.rootContainer, null, async () => {
         if (!this.rootNode) {
-          throw new Error("Root node not set");
+          throw new Error("Failed to initialize reconciler root node.");
         }
-        this.rootNode.yogaNode.calculateLayout("auto", "auto");
-        await this.drawNode(this.rootNode);
-        this.rootNode.yogaNode.freeRecursive();
-        resolve();
+        resolve(this.rootNode.drawTree());
       });
     });
   }
 
-  setRootNode(node: ReconcilerNode): void {
+  setRootNode(node: ReconcilerRootNode): void {
     this.rootNode = node;
   }
 
   clear(): void {
-    this.buffer.clear();
     this.initContainer();
-  }
-
-  getRawImage(): RawBWImage {
-    return this.buffer.toRawImage();
   }
 
   private initContainer(): void {
@@ -55,28 +43,12 @@ export class ReconcilerRoot {
       false,
       null,
       RECONCILER_ID_PREFIX,
-      this.handleRecoverableError,
+      this.handleError,
       null,
     );
   }
 
-  private async drawNode(node: ReconcilerNode, basePosition: RenderingPosition = { top: 0, left: 0 }): Promise<void> {
-    const { dimensions, position: layoutPosition, display }: LayoutResults = node.getLayoutResults();
-    if (display === "none") return;
-
-    const position: RenderingPosition = {
-      top: basePosition.top + layoutPosition.top,
-      left: basePosition.left + layoutPosition.left,
-    };
-
-    await node.draw(this.buffer, dimensions, position);
-
-    for (const child of node.children) {
-      await this.drawNode(child, position);
-    }
-  }
-
-  private handleRecoverableError(error: Error): void {
-    throw new Error("Reconciler error: " + JSON.stringify(error));
+  private handleError(error: Error): void {
+    console.error("Reconciler error: " + error.message);
   }
 }

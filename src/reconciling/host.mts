@@ -103,8 +103,12 @@ export const host: ReconcilerHostConfig = {
     return false;
   },
   appendChildToContainer: (container: ReconcilerRoot, child: Instance): void => {
-    container.setRootNode(child);
+    if (!(child instanceof ReconcilerRootNode)) {
+      throw new Error("Could not find react-trmnl root. Make sure to wrap your app in <Trmnl>.");
+    }
+    container.setRootNode(child as ReconcilerRootNode);
   },
+  detachDeletedInstance: (_instance: Instance): void => {},
   prepareUpdate(
     _instance: Instance,
     _type: InstanceType,

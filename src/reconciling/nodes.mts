@@ -1,9 +1,9 @@
 import Yoga, { type Node as YogaNode } from "yoga-layout";
 import { resolveImage } from "../loading/resolver.mjs";
 import { applyYogaStyle, fromDisplayValue } from "../layout/style.mjs";
+import { ImageBuffer } from ".././rendering/compositing.mjs";
 import type { LayoutResults, YogaStyle } from "../layout/types.mjs";
-import type { RawImage, RenderingDimensions, RenderingPosition } from ".././rendering/types.mjs";
-import type { ImageBuffer } from ".././rendering/compositing.mjs";
+import type { RawBWImage, RawImage, RenderingDimensions, RenderingPosition } from ".././rendering/types.mjs";
 import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
 import type { BoxProps, ImageProps, RootProps, TextProps } from "./types.mjs";
 
@@ -17,9 +17,28 @@ export abstract class ReconcilerNode {
     this.yogaNode = node;
   }
 
-  abstract draw(buffer: ImageBuffer, dimensions: RenderingDimensions, position: RenderingPosition): Promise<void>;
+  protected async drawRecursive(
+    buffer: ImageBuffer,
+    basePosition: RenderingPosition = { top: 0, left: 0 },
+  ): Promise<void> {
+    const { dimensions, position: layoutPosition, display }: LayoutResults = this.getComputedLayout();
+    if (display === "none") return;
 
-  getLayoutResults(): LayoutResults {
+    const position: RenderingPosition = {
+      top: basePosition.top + layoutPosition.top,
+      left: basePosition.left + layoutPosition.left,
+    };
+
+    await this.drawNode(buffer, dimensions, position);
+
+    for (const child of this.children) {
+      await child.drawRecursive(buffer, position);
+    }
+  }
+
+  abstract drawNode(buffer: ImageBuffer, dimensions: RenderingDimensions, position: RenderingPosition): Promise<void>;
+
+  getComputedLayout(): LayoutResults {
     return {
       dimensions: {
         width: this.yogaNode.getComputedWidth(),
@@ -58,7 +77,16 @@ export class ReconcilerRootNode extends ReconcilerNode {
     super({ ...style, width, height });
   }
 
-  override async draw(): Promise<void> {}
+  override async drawNode(): Promise<void> {}
+
+  async drawTree(): Promise<RawBWImage> {
+    this.yogaNode.calculateLayout("auto", "auto");
+    const { dimensions }: LayoutResults = this.getComputedLayout();
+    const buffer = new ImageBuffer(dimensions);
+    await this.drawRecursive(buffer);
+    this.yogaNode.freeRecursive();
+    return buffer.toRawImage();
+  }
 }
 
 export class ReconcilerTextNode extends ReconcilerNode {
@@ -72,7 +100,7 @@ export class ReconcilerTextNode extends ReconcilerNode {
     this.textStyle = { color, fontSize, fontFamily, borderColor, borderWidth };
   }
 
-  override async draw(
+  override async drawNode(
     buffer: ImageBuffer,
     dimensions: RenderingDimensions,
     position: RenderingPosition,
@@ -105,7 +133,7 @@ export class ReconcilerBoxNode extends ReconcilerNode {
     this.boxStyle = { backgroundColor, borderColor, borderWidth, borderRadius };
   }
 
-  override async draw(
+  override async drawNode(
     buffer: ImageBuffer,
     dimensions: RenderingDimensions,
     position: RenderingPosition,
@@ -140,7 +168,7 @@ export class ReconcilerImageNode extends ReconcilerNode {
     this.imageStyle = { dithering };
   }
 
-  override async draw(
+  override async drawNode(
     buffer: ImageBuffer,
     dimensions: RenderingDimensions,
     position: RenderingPosition,
@@ -157,5 +185,5 @@ export class ReconcilerNoopNode extends ReconcilerNode {
     super({});
   }
 
-  override async draw(): Promise<void> {}
+  override async drawNode(): Promise<void> {}
 }
