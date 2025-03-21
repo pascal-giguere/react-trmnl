@@ -2,7 +2,7 @@ import {
   Align,
   BoxSizing,
   Direction,
-  Display,
+  Display as DisplayValue,
   Edge,
   FlexDirection,
   Gutter,
@@ -11,7 +11,7 @@ import {
   Wrap,
   type Node as YogaNode,
 } from "yoga-layout";
-import type { YogaStyle, AlignContent, AlignItems, JustifyContent } from "./types.mjs";
+import type { YogaStyle, AlignContent, AlignItems, JustifyContent, Display } from "./types.mjs";
 
 export function applyYogaStyle(node: YogaNode, style: YogaStyle): void {
   for (const styleProperty of Object.keys(style)) {
@@ -37,32 +37,8 @@ function applyYogaStyleProperty(node: YogaNode, style: YogaStyle, property: keyo
     case "aspectRatio":
       node.setAspectRatio(style.aspectRatio);
       break;
-    case "borderBottomWidth":
-      node.setBorder(Edge.Bottom, style.borderBottomWidth);
-      break;
-    case "borderEndWidth":
-      node.setBorder(Edge.End, style.borderEndWidth);
-      break;
-    case "borderLeftWidth":
-      node.setBorder(Edge.Left, style.borderLeftWidth);
-      break;
-    case "borderRightWidth":
-      node.setBorder(Edge.Right, style.borderRightWidth);
-      break;
-    case "borderStartWidth":
-      node.setBorder(Edge.Start, style.borderStartWidth);
-      break;
-    case "borderTopWidth":
-      node.setBorder(Edge.Top, style.borderTopWidth);
-      break;
     case "borderWidth":
       node.setBorder(Edge.All, style.borderWidth);
-      break;
-    case "borderInlineWidth":
-      node.setBorder(Edge.Horizontal, style.borderInlineWidth);
-      break;
-    case "borderBlockWidth":
-      node.setBorder(Edge.Vertical, style.borderBlockWidth);
       break;
     case "bottom":
       node.setPosition(Edge.Bottom, style.bottom);
@@ -266,14 +242,14 @@ function direction(str?: "ltr" | "rtl"): Direction {
   throw new Error(`'${str}' is not a valid value for direction`);
 }
 
-function display(str?: "none" | "flex" | "contents"): Display {
+function display(str?: Display): DisplayValue {
   switch (str) {
     case "none":
-      return Display.None;
+      return DisplayValue.None;
     case "flex":
-      return Display.Flex;
+      return DisplayValue.Flex;
     case "contents":
-      return Display.Contents;
+      return DisplayValue.Contents;
   }
   throw new Error(`'${str}' is not a valid value for display`);
 }
@@ -334,13 +310,13 @@ function position(str?: "absolute" | "relative" | "static"): PositionType {
   throw new Error(`'${str}' is not a valid value for position`);
 }
 
-export function fromDisplayValue(displayValue: Display): "flex" | "none" | "contents" {
+export function fromDisplayValue(displayValue: DisplayValue): Display {
   switch (displayValue) {
-    case Display.Flex:
+    case DisplayValue.Flex:
       return "flex";
-    case Display.None:
+    case DisplayValue.None:
       return "none";
-    case Display.Contents:
+    case DisplayValue.Contents:
       return "contents";
     default:
       throw new Error(`Unknown display value: '${displayValue}'`);

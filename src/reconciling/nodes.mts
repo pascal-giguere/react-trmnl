@@ -129,7 +129,7 @@ export class ReconcilerBoxNode extends ReconcilerNode {
 
   constructor({ style }: BoxProps) {
     const { backgroundColor, borderColor, borderWidth, borderRadius, ...yogaStyle } = style;
-    super(yogaStyle);
+    super({ ...yogaStyle, borderWidth });
     this.boxStyle = { backgroundColor, borderColor, borderWidth, borderRadius };
   }
 

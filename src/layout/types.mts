@@ -3,7 +3,7 @@ import type { RenderingDimensions, RenderingPosition } from ".././rendering/type
 export type LayoutResults = {
   dimensions: RenderingDimensions;
   position: RenderingPosition;
-  display: "flex" | "contents" | "none";
+  display: Display;
 };
 
 export type AlignContent =
@@ -17,6 +17,8 @@ export type AlignContent =
 
 export type AlignItems = "flex-start" | "flex-end" | "center" | "stretch" | "baseline";
 
+export type Display = "flex" | "contents" | "none";
+
 export type JustifyContent = "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly";
 
 export type YogaStyle = {
@@ -24,20 +26,12 @@ export type YogaStyle = {
   alignItems?: AlignItems;
   alignSelf?: AlignItems;
   aspectRatio?: number;
-  borderBottomWidth?: number;
-  borderEndWidth?: number;
-  borderLeftWidth?: number;
-  borderRightWidth?: number;
-  borderStartWidth?: number;
-  borderTopWidth?: number;
   borderWidth?: number;
-  borderInlineWidth?: number;
-  borderBlockWidth?: number;
   bottom?: number | `${number}%`;
   boxSizing?: "border-box" | "content-box";
   columnGap?: number;
   direction?: "ltr" | "rtl";
-  display?: "none" | "flex" | "contents";
+  display?: Display;
   end?: number | `${number}%`;
   flex?: number;
   flexBasis?: number | "auto" | `${number}%`;
