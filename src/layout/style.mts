@@ -333,3 +333,16 @@ function position(str?: "absolute" | "relative" | "static"): PositionType {
   }
   throw new Error(`'${str}' is not a valid value for position`);
 }
+
+export function fromDisplayValue(displayValue: Display): "flex" | "none" | "contents" {
+  switch (displayValue) {
+    case Display.Flex:
+      return "flex";
+    case Display.None:
+      return "none";
+    case Display.Contents:
+      return "contents";
+    default:
+      throw new Error(`Unknown display value: '${displayValue}'`);
+  }
+}

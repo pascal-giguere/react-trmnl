@@ -86,8 +86,6 @@ export type RootYogaStyle = Pick<
   YogaStyle,
   | "alignContent"
   | "alignItems"
-  | "alignSelf"
-  | "boxSizing"
   | "columnGap"
   | "direction"
   | "flex"

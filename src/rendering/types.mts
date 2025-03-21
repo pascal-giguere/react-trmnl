@@ -13,6 +13,6 @@ export type RenderingDimensions = {
 };
 
 export type RenderingPosition = {
-  top?: number;
-  left?: number;
+  top: number;
+  left: number;
 };

@@ -2,8 +2,9 @@ import { type ReactNode } from "react";
 import ReactReconciler, { type OpaqueRoot } from "react-reconciler";
 import { host } from "./host.mjs";
 import { ImageBuffer } from ".././rendering/compositing.mjs";
-import type { RawBWImage, RenderingDimensions } from ".././rendering/types.mjs";
+import type { RawBWImage, RenderingDimensions, RenderingPosition } from ".././rendering/types.mjs";
 import { ReconcilerNode } from "./nodes.mjs";
+import type { LayoutResults } from "../layout/types.mjs";
 
 const RECONCILER_ID_PREFIX = "react-trmnl";
 
@@ -59,11 +60,19 @@ export class ReconcilerRoot {
     );
   }
 
-  private async drawNode(node: ReconcilerNode): Promise<void> {
-    await node.draw(this.buffer);
+  private async drawNode(node: ReconcilerNode, basePosition: RenderingPosition = { top: 0, left: 0 }): Promise<void> {
+    const { dimensions, position: layoutPosition, display }: LayoutResults = node.getLayoutResults();
+    if (display === "none") return;
+
+    const position: RenderingPosition = {
+      top: basePosition.top + layoutPosition.top,
+      left: basePosition.left + layoutPosition.left,
+    };
+
+    await node.draw(this.buffer, dimensions, position);
 
     for (const child of node.children) {
-      await this.drawNode(child);
+      await this.drawNode(child, position);
     }
   }
 

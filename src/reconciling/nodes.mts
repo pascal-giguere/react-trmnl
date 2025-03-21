@@ -1,8 +1,8 @@
-import Yoga, { Display, type Node as YogaNode } from "yoga-layout";
+import Yoga, { type Node as YogaNode } from "yoga-layout";
 import { resolveImage } from "../loading/resolver.mjs";
-import { applyYogaStyle } from "../layout/style.mjs";
+import { applyYogaStyle, fromDisplayValue } from "../layout/style.mjs";
 import type { LayoutResults, YogaStyle } from "../layout/types.mjs";
-import type { RawImage } from ".././rendering/types.mjs";
+import type { RawImage, RenderingDimensions, RenderingPosition } from ".././rendering/types.mjs";
 import type { ImageBuffer } from ".././rendering/compositing.mjs";
 import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
 import type { BoxProps, ImageProps, RootProps, TextProps } from "./types.mjs";
@@ -17,9 +17,9 @@ export abstract class ReconcilerNode {
     this.yogaNode = node;
   }
 
-  abstract draw(buffer: ImageBuffer): Promise<void>;
+  abstract draw(buffer: ImageBuffer, dimensions: RenderingDimensions, position: RenderingPosition): Promise<void>;
 
-  protected getLayoutResults(): LayoutResults {
+  getLayoutResults(): LayoutResults {
     return {
       dimensions: {
         width: this.yogaNode.getComputedWidth(),
@@ -29,19 +29,7 @@ export abstract class ReconcilerNode {
         top: this.yogaNode.getComputedTop(),
         left: this.yogaNode.getComputedLeft(),
       },
-      display: (() => {
-        const displayValue: Display = this.yogaNode.getDisplay();
-        switch (displayValue) {
-          case Display.Flex:
-            return "flex";
-          case Display.None:
-            return "none";
-          case Display.Contents:
-            return "contents";
-          default:
-            throw new Error(`Unknown display value: '${displayValue}'`);
-        }
-      })(),
+      display: fromDisplayValue(this.yogaNode.getDisplay()),
     };
   }
 
@@ -70,7 +58,7 @@ export class ReconcilerRootNode extends ReconcilerNode {
     super({ ...style, width, height });
   }
 
-  override async draw(_buffer: ImageBuffer): Promise<void> {}
+  override async draw(): Promise<void> {}
 }
 
 export class ReconcilerTextNode extends ReconcilerNode {
@@ -84,10 +72,11 @@ export class ReconcilerTextNode extends ReconcilerNode {
     this.textStyle = { color, fontSize, fontFamily, borderColor, borderWidth };
   }
 
-  override async draw(buffer: ImageBuffer): Promise<void> {
-    const { dimensions, position, display }: LayoutResults = this.getLayoutResults();
-    if (display === "none") return;
-
+  override async draw(
+    buffer: ImageBuffer,
+    dimensions: RenderingDimensions,
+    position: RenderingPosition,
+  ): Promise<void> {
     const { color, fontSize, fontFamily, borderColor, borderWidth } = this.textStyle;
     const svg =
       `<text` +
@@ -116,10 +105,11 @@ export class ReconcilerBoxNode extends ReconcilerNode {
     this.boxStyle = { backgroundColor, borderColor, borderWidth, borderRadius };
   }
 
-  override async draw(buffer: ImageBuffer): Promise<void> {
-    const { dimensions, position, display }: LayoutResults = this.getLayoutResults();
-    if (display === "none") return;
-
+  override async draw(
+    buffer: ImageBuffer,
+    dimensions: RenderingDimensions,
+    position: RenderingPosition,
+  ): Promise<void> {
     const { backgroundColor, borderColor, borderWidth, borderRadius } = this.boxStyle;
     const svg =
       `<rect` +
@@ -150,10 +140,11 @@ export class ReconcilerImageNode extends ReconcilerNode {
     this.imageStyle = { dithering };
   }
 
-  override async draw(buffer: ImageBuffer): Promise<void> {
-    const { dimensions, position, display }: LayoutResults = this.getLayoutResults();
-    if (display === "none") return;
-
+  override async draw(
+    buffer: ImageBuffer,
+    dimensions: RenderingDimensions,
+    position: RenderingPosition,
+  ): Promise<void> {
     const { dithering } = this.imageStyle;
     // TODO Implement image cache
     const image: RawImage = await resolveImage(this.src);
@@ -166,5 +157,5 @@ export class ReconcilerNoopNode extends ReconcilerNode {
     super({});
   }
 
-  override async draw(_buffer: ImageBuffer): Promise<void> {}
+  override async draw(): Promise<void> {}
 }

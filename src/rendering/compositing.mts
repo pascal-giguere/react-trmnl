@@ -2,12 +2,12 @@ import sharp from "sharp";
 import { ditherImage, Dithering } from "./dithering.mjs";
 import type { RawImage, RawBWImage, RenderingDimensions, RenderingPosition } from "./types.mjs";
 
-type DrawSvgOptions = { svg: string; dimensions: RenderingDimensions; position?: RenderingPosition };
+type DrawSvgOptions = { svg: string; dimensions: RenderingDimensions; position?: Partial<RenderingPosition> };
 
 type DrawImageOptions = {
   image: RawImage;
   dimensions: RenderingDimensions;
-  position?: RenderingPosition;
+  position?: Partial<RenderingPosition>;
   dithering?: Dithering;
 };
 
