@@ -30,7 +30,7 @@ export abstract class ReconcilerNode {
         left: this.yogaNode.getComputedLeft(),
       },
       display: (() => {
-        const displayValue = this.yogaNode.getDisplay();
+        const displayValue: Display = this.yogaNode.getDisplay();
         switch (displayValue) {
           case Display.Flex:
             return "flex";
@@ -66,8 +66,8 @@ export abstract class ReconcilerNode {
 }
 
 export class ReconcilerRootNode extends ReconcilerNode {
-  constructor({ width, height }: RootProps) {
-    super({ width, height });
+  constructor({ width, height, style }: RootProps) {
+    super({ ...style, width, height });
   }
 
   override async draw(_buffer: ImageBuffer): Promise<void> {}

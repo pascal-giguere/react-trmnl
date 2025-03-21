@@ -35,19 +35,21 @@ export type YogaStyle = {
   borderBlockWidth?: number;
   bottom?: number | `${number}%`;
   boxSizing?: "border-box" | "content-box";
+  columnGap?: number;
   direction?: "ltr" | "rtl";
   display?: "none" | "flex" | "contents";
   end?: number | `${number}%`;
   flex?: number;
   flexBasis?: number | "auto" | `${number}%`;
   flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
-  rowGap?: number;
-  gap?: number;
-  columnGap?: number;
   flexGrow?: number;
   flexShrink?: number;
   flexWrap?: "wrap" | "nowrap" | "wrap-reverse";
+  gap?: number;
   height?: number | "auto" | `${number}%`;
+  inset?: number | `${number}%`;
+  insetInline?: number | `${number}%`;
+  insetBlock?: number | `${number}%`;
   justifyContent?: JustifyContent;
   left?: number | `${number}%`;
   margin?: number | "auto" | `${number}%`;
@@ -74,10 +76,37 @@ export type YogaStyle = {
   paddingBlock?: number | `${number}%`;
   position?: "absolute" | "relative" | "static";
   right?: number | `${number}%`;
+  rowGap?: number;
   start?: number | `${number}%`;
   top?: number | `${number}%`;
-  insetInline?: number | `${number}%`;
-  insetBlock?: number | `${number}%`;
-  inset?: number | `${number}%`;
   width?: number | "auto" | `${number}%`;
 };
+
+export type RootYogaStyle = Pick<
+  YogaStyle,
+  | "alignContent"
+  | "alignItems"
+  | "alignSelf"
+  | "boxSizing"
+  | "columnGap"
+  | "direction"
+  | "flex"
+  | "flexBasis"
+  | "flexDirection"
+  | "flexGrow"
+  | "flexShrink"
+  | "flexWrap"
+  | "gap"
+  | "justifyContent"
+  | "padding"
+  | "paddingBottom"
+  | "paddingEnd"
+  | "paddingLeft"
+  | "paddingRight"
+  | "paddingStart"
+  | "paddingTop"
+  | "paddingInline"
+  | "paddingBlock"
+  | "position"
+  | "rowGap"
+>;
