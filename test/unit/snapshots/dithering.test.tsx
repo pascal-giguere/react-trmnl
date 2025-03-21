@@ -9,7 +9,6 @@ it("applies different dithering algorithms to images", async () => {
     <Trmnl width={800} height={1500}>
       <Box style={{ flexDirection: "row" }}>
         <Box>
-          {/* All algos */}
           <Image src="https://picsum.photos/id/57/400/300" style={{ ...baseStyle, dithering: Dithering.None }} />
           <Image src="https://picsum.photos/id/57/400/300" style={{ ...baseStyle, dithering: Dithering.Atkinson }} />
           <Image src="https://picsum.photos/id/57/400/300" style={{ ...baseStyle, dithering: Dithering.Box }} />
@@ -18,14 +17,14 @@ it("applies different dithering algorithms to images", async () => {
             src="https://picsum.photos/id/57/400/300"
             style={{ ...baseStyle, dithering: Dithering.FloydSteinberg }}
           />
+        </Box>
+        <Box>
           <Image
             src="https://picsum.photos/id/57/400/300"
             style={{ ...baseStyle, dithering: Dithering.JarvisJudiceNinke }}
           />
           <Image src="https://picsum.photos/id/57/400/300" style={{ ...baseStyle, dithering: Dithering.Pigeon }} />
           <Image src="https://picsum.photos/id/57/400/300" style={{ ...baseStyle, dithering: Dithering.Stucki }} />
-        </Box>
-        <Box>
           {/* Image downscale */}
           <Image src="https://picsum.photos/id/57/1200/900" style={{ ...baseStyle, dithering: Dithering.Atkinson }} />
           {/* Image upscale */}
