@@ -1,0 +1,23 @@
+{
+  "name": "react-trmnl-docs",
+  "description": "The react-trmnl documentation website",
+  "version": "0.1.0",
+  "author": "Pascal Giguère",
+  "homepage": "https://github.com/pascal-giguere/react-trmnl",
+  "license": "ISC",
+  "type": "module",
+  "packageManager": "yarn@4.7.0",
+  "engines": {
+    "node": ">=22",
+    "npm": "please-use-yarn",
+    "yarn": "4.7.0"
+  },
+  "main": "dist/index.mjs",
+  "scripts": {
+    "build": ""
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "prettier": "^3.5.1"
+  }
+}
