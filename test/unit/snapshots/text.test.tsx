@@ -34,23 +34,24 @@ it("renders the <Text> component", async () => {
           flex: 1,
           flexDirection: "row",
           justifyContent: "space-between",
+          color: Color.White,
           backgroundColor: Color.Black,
           padding: 25,
         }}
       >
         <Box style={{ flex: 1 }}>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
         </Box>
         <Box style={{ flex: 1 }}>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
-          <Text style={{ color: Color.White }}>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
+          <Text>Lorem ipsum</Text>
         </Box>
       </Box>
     </Trmnl>,

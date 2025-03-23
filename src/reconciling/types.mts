@@ -3,7 +3,7 @@ import type { HostConfig } from "react-reconciler";
 import type { ReconcilerRoot } from "./root.mjs";
 import type { ReconcilerNode, ReconcilerNoopNode } from "./nodes.mjs";
 import type { TrmnlElement } from "./host.mjs";
-import type { TextStyle, BoxStyle, ImageStyle } from "../styling/types.mjs";
+import type { RootStyle, TextStyle, BoxStyle, ImageStyle } from "../styling/types.mjs";
 import type { RootYogaStyle, YogaStyle } from "../layout/types.mjs";
 
 export type InstanceType = TrmnlElement;
@@ -29,7 +29,12 @@ export type ReconcilerHostConfig = HostConfig<
   unknown
 >;
 
-export type RootProps = { width: number; height: number; style: RootYogaStyle; children: JSX.Element | JSX.Element[] };
+export type RootProps = {
+  width: number;
+  height: number;
+  style: RootStyle & RootYogaStyle;
+  children: JSX.Element | JSX.Element[];
+};
 
 export type TextProps = { style: TextStyle & YogaStyle; children: string };
 

@@ -2,9 +2,10 @@ import Yoga, { type Node as YogaNode } from "yoga-layout";
 import { resolveImage } from "../loading/resolver.mjs";
 import { applyYogaStyle, fromDisplayValue } from "../layout/style.mjs";
 import { ImageBuffer } from ".././rendering/compositing.mjs";
+import { inheritStyle } from "../styling/inheritance.mjs";
 import type { LayoutResults, YogaStyle } from "../layout/types.mjs";
 import type { RawBWImage, RawImage, RenderingDimensions, RenderingPosition } from ".././rendering/types.mjs";
-import type { BoxStyle, ImageStyle, TextStyle } from "../styling/types.mjs";
+import type { BoxStyle, ImageStyle, InheritedStyle, RootStyle, TextStyle } from "../styling/types.mjs";
 import type { BoxProps, ImageProps, RootProps, TextProps } from "./types.mjs";
 
 export abstract class ReconcilerNode {
@@ -31,12 +32,20 @@ export abstract class ReconcilerNode {
 
     await this.drawNode(buffer, dimensions, position);
 
+    const inheritedStyle: InheritedStyle | null = this.getInheritedStyle();
     for (const child of this.children) {
+      if (inheritedStyle) {
+        child.inheritStyle(inheritedStyle);
+      }
       await child.drawRecursive(buffer, position);
     }
   }
 
   abstract drawNode(buffer: ImageBuffer, dimensions: RenderingDimensions, position: RenderingPosition): Promise<void>;
+
+  abstract getInheritedStyle(): InheritedStyle | null;
+
+  abstract inheritStyle(inheritedStyle: InheritedStyle): void;
 
   getComputedLayout(): LayoutResults {
     return {
@@ -73,11 +82,22 @@ export abstract class ReconcilerNode {
 }
 
 export class ReconcilerRootNode extends ReconcilerNode {
+  private readonly rootStyle: RootStyle;
+
   constructor({ width, height, style }: RootProps) {
-    super({ ...style, width, height });
+    const { color, fontFamily, fontSize, ...yogaStyle } = style;
+    super({ ...yogaStyle, width, height });
+    this.rootStyle = { color, fontFamily, fontSize };
   }
 
   override async drawNode(): Promise<void> {}
+
+  override getInheritedStyle(): InheritedStyle {
+    const { color, fontSize, fontFamily } = this.rootStyle;
+    return { color, fontSize, fontFamily };
+  }
+
+  override inheritStyle(): void {}
 
   async drawTree(): Promise<RawBWImage> {
     this.yogaNode.calculateLayout("auto", "auto");
@@ -91,7 +111,7 @@ export class ReconcilerRootNode extends ReconcilerNode {
 
 export class ReconcilerTextNode extends ReconcilerNode {
   private readonly text: string;
-  private readonly textStyle: TextStyle;
+  private textStyle: TextStyle;
 
   constructor({ children, style }: TextProps) {
     const { color, fontSize, fontFamily, borderColor, borderWidth, flex = 1, ...yogaStyle } = style;
@@ -122,15 +142,24 @@ export class ReconcilerTextNode extends ReconcilerNode {
     console.log(svg);
     await buffer.drawSvg({ svg, dimensions, position });
   }
+
+  override getInheritedStyle(): null {
+    return null;
+  }
+
+  override inheritStyle(inheritedStyle: InheritedStyle): void {
+    this.textStyle = inheritStyle<TextStyle>(this.textStyle, inheritedStyle);
+  }
 }
 
 export class ReconcilerBoxNode extends ReconcilerNode {
-  private readonly boxStyle: BoxStyle;
+  private boxStyle: BoxStyle;
 
   constructor({ style }: BoxProps) {
-    const { backgroundColor, borderColor, borderWidth, borderRadius, ...yogaStyle } = style;
+    const { backgroundColor, borderColor, borderWidth, borderRadius, color, fontFamily, fontSize, ...yogaStyle } =
+      style;
     super({ ...yogaStyle, borderWidth });
-    this.boxStyle = { backgroundColor, borderColor, borderWidth, borderRadius };
+    this.boxStyle = { backgroundColor, borderColor, borderWidth, borderRadius, color, fontFamily, fontSize };
   }
 
   override async drawNode(
@@ -155,6 +184,15 @@ export class ReconcilerBoxNode extends ReconcilerNode {
     console.log(svg);
     await buffer.drawSvg({ svg, dimensions, position });
   }
+
+  override getInheritedStyle(): InheritedStyle {
+    const { color, fontSize, fontFamily } = this.boxStyle;
+    return { color, fontSize, fontFamily };
+  }
+
+  override inheritStyle(inheritedStyle: InheritedStyle): void {
+    this.boxStyle = inheritStyle<BoxStyle>(this.boxStyle, inheritedStyle);
+  }
 }
 
 export class ReconcilerImageNode extends ReconcilerNode {
@@ -178,6 +216,12 @@ export class ReconcilerImageNode extends ReconcilerNode {
     const image: RawImage = await resolveImage(this.src);
     await buffer.drawImage({ image, dimensions, position, dithering });
   }
+
+  override getInheritedStyle(): null {
+    return null;
+  }
+
+  override inheritStyle(): void {}
 }
 
 export class ReconcilerNoopNode extends ReconcilerNode {
@@ -186,4 +230,10 @@ export class ReconcilerNoopNode extends ReconcilerNode {
   }
 
   override async drawNode(): Promise<void> {}
+
+  override getInheritedStyle(): null {
+    return null;
+  }
+
+  override inheritStyle(): void {}
 }

@@ -1,6 +1,5 @@
 import React, { type ReactElement } from "react";
 import { Color } from "../.././rendering/colors.mjs";
-import { DefaultFont } from "../.././rendering/fonts.mjs";
 import type { TextStyle } from "../../styling/types.mjs";
 import type { YogaStyle } from "../../layout/types.mjs";
 
@@ -10,9 +9,9 @@ interface Props {
 }
 
 const DEFAULT_STYLE: TextStyle = {
-  color: Color.Black,
-  fontSize: 12,
-  fontFamily: DefaultFont.Sans,
+  color: "inherit",
+  fontFamily: "inherit",
+  fontSize: "inherit",
   borderColor: Color.None,
   borderWidth: 0,
 };

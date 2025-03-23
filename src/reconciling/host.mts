@@ -1,6 +1,5 @@
 import type { OpaqueHandle } from "react-reconciler";
 import { DefaultEventPriority } from "react-reconciler/constants.js";
-import type { ReconcilerRoot } from "./root.mjs";
 import {
   ReconcilerNode,
   ReconcilerRootNode,
@@ -9,6 +8,7 @@ import {
   ReconcilerImageNode,
   ReconcilerNoopNode,
 } from "./nodes.mjs";
+import type { ReconcilerRoot } from "./root.mjs";
 import type {
   BoxProps,
   HostContext,

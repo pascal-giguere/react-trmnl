@@ -13,6 +13,9 @@ const DEFAULT_STYLE: BoxStyle = {
   borderColor: Color.Black,
   borderWidth: 0,
   borderRadius: 0,
+  color: "inherit",
+  fontFamily: "inherit",
+  fontSize: "inherit",
 };
 
 export const Box = ({ children, style }: Props): ReactElement => (

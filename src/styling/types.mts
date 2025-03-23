@@ -2,25 +2,24 @@ import type { Color } from ".././rendering/colors.mjs";
 import type { Font } from ".././rendering/fonts.mjs";
 import type { Dithering } from ".././rendering/dithering.mjs";
 
-export type TextStyle = {
-  color: Color;
-  fontSize: number;
-  fontFamily: Font;
+export type InheritedStyle = {
+  color: Color | "inherit";
+  fontSize: number | "inherit";
+  fontFamily: Font | "inherit";
+};
+
+export type RootStyle = InheritedStyle;
+
+export type TextStyle = InheritedStyle & {
   borderColor: Color;
   borderWidth: number;
 };
 
-export type BoxStyle = {
+export type BoxStyle = InheritedStyle & {
   backgroundColor: Color;
   borderColor: Color;
   borderWidth: number;
   borderRadius: number;
-
-  /* TODO add these properties
-  color: Color;
-  fontSize: number;
-  fontFamily: Font;
-   */
 };
 
 export type ImageStyle = {
