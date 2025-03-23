@@ -15,6 +15,12 @@ export type BoxStyle = {
   borderColor: Color;
   borderWidth: number;
   borderRadius: number;
+
+  /* TODO add these properties
+  color: Color;
+  fontSize: number;
+  fontFamily: Font;
+   */
 };
 
 export type ImageStyle = {

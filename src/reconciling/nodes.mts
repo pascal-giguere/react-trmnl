@@ -94,8 +94,8 @@ export class ReconcilerTextNode extends ReconcilerNode {
   private readonly textStyle: TextStyle;
 
   constructor({ children, style }: TextProps) {
-    const { color, fontSize, fontFamily, borderColor, borderWidth, ...yogaStyle } = style;
-    super(yogaStyle);
+    const { color, fontSize, fontFamily, borderColor, borderWidth, flex = 1, ...yogaStyle } = style;
+    super({ ...yogaStyle, flex });
     this.text = children;
     this.textStyle = { color, fontSize, fontFamily, borderColor, borderWidth };
   }
