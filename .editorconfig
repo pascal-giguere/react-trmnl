@@ -7,7 +7,7 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 ij_visual_guides = 120
 
-[*.{ts,js,json}]
+[*.{js,mjs,cjs,ts,mts,json}]
 indent_style = space
 indent_size = 2
 max_line_length = 120
