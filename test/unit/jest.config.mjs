@@ -3,7 +3,6 @@ export default {
   testMatch: ["**/*.test.mts", "**/*.test.tsx"],
   moduleFileExtensions: ["ts", "mts", "tsx", "js", "mjs", "json"],
   extensionsToTreatAsEsm: [".ts", ".tsx", ".mts"],
-
   transform: {
     "^.+\\.m?tsx?$": [
       "ts-jest",
