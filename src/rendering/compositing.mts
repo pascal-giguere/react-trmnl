@@ -1,6 +1,21 @@
 import sharp from "sharp";
 import { ditherImage, Dithering } from "./dithering.mjs";
 import type { RawImage, RawBWImage, RenderingDimensions, RenderingPosition } from "./types.mjs";
+import type { Font } from "./fonts.mjs";
+
+type DrawTextOptions = {
+  text: string;
+  font: Font;
+  fontSize: number;
+  color: string;
+  borderColor: string;
+  borderWidth: number;
+  textAlign: "left" | "center" | "right";
+  lineHeight: number;
+  wrap: "word" | "char" | "word-char" | "none";
+  dimensions: RenderingDimensions;
+  position?: Partial<RenderingPosition>;
+};
 
 type DrawSvgOptions = { svg: string; dimensions: RenderingDimensions; position?: Partial<RenderingPosition> };
 
@@ -20,6 +35,21 @@ export class ImageBuffer {
     this.width = width;
     this.height = height;
     this.data = Buffer.alloc(width * height).fill(255);
+  }
+
+  async drawText({ text, dimensions, position = {} }: DrawTextOptions): Promise<void> {
+    const { width, height } = dimensions;
+    const { top = 0, left = 0 } = position;
+    if (width === 0 || height === 0) return;
+
+    this.data = Buffer.from(
+      (
+        await sharp(this.data, { raw: { width: this.width, height: this.height, channels: 1 } })
+          .composite([{ input: { text: { text, width, height } }, top, left }])
+          .toColourspace("b-w")
+          .toBuffer()
+      ).map((value) => (value < 128 ? 0 : 255)), // TODO remove threshold
+    );
   }
 
   async drawSvg({ svg, dimensions, position = {} }: DrawSvgOptions): Promise<void> {

@@ -126,6 +126,25 @@ export class ReconcilerTextNode extends ReconcilerNode {
     position: RenderingPosition,
   ): Promise<void> {
     const { color, fontSize, fontFamily, borderColor, borderWidth } = this.textStyle;
+
+    await buffer.drawText({
+      text: this.text,
+      dimensions,
+      position,
+      color,
+      fontSize,
+      font: fontFamily,
+      borderColor,
+      borderWidth,
+    });
+  }
+
+  override async drawNodeOrig(
+    buffer: ImageBuffer,
+    dimensions: RenderingDimensions,
+    position: RenderingPosition,
+  ): Promise<void> {
+    const { color, fontSize, fontFamily, borderColor, borderWidth } = this.textStyle;
     const svg =
       `<text` +
       ` fill="${color}"` +
