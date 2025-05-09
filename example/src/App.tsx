@@ -9,6 +9,7 @@ export const App = (): ReactElement => (
         alignItems: "center",
         justifyContent: "space-evenly",
         backgroundColor: Color.Black,
+        borderRadius: 10,
       }}
     >
       <Image

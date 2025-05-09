@@ -53,9 +53,9 @@ const png: Buffer = await render(<App />, ImageFormat.PNG);
 
 **Resulting output**:
 
-<img src="./doc/output1.png" alt="Resulting output" width="400"/>
+<img src="./doc/output1.png" alt="Resulting output" width="600"/>
 
-### Advanced example
+## Advanced styling example
 
 ```tsx
 import React, { type ReactElement } from "react";
@@ -118,7 +118,7 @@ export const App = (): ReactElement => (
 
 **Resulting output:**
 
-<img src="./doc/output2.png" alt="Resulting output" width="400"/>
+<img src="./doc/output2.png" alt="Resulting output" width="600"/>
 
 > [!TIP]
 > For a complete example project, see the [example](./example) directory.
