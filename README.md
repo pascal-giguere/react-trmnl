@@ -2,7 +2,7 @@
 
 <br>
 
-Build React apps for [TRMNL](https://usetrmnl.com) e-ink devices.
+Build efficient, pixel-perfect server-side React apps for [TRMNL](https://usetrmnl.com) e-ink devices.
 
 _Currently in development_
 
@@ -12,7 +12,9 @@ _Currently in development_
 
 <br>
 
-`react-trmnl` is a Node.js library including:
+`react-trmnl` is a Node.js library meant to be used as part of a [BYOS (Bring Your Own Server)](<(https://docs.usetrmnl.com/go/diy/byos)>) solution for TRMNL devices.
+
+It includes:
 
 - ⚙️ **A custom React renderer**
   - Natively render React components to 1-bit monochrome images, no browser required
@@ -23,6 +25,8 @@ _Currently in development_
   - Fonts – Use bitmap fonts optimized for low-resolution, 1-bit screens (coming soon)
 - ⚛️ **A component library** (coming soon) – A set of pre-built components for common UI patterns
 - 🌐 **A development server** (coming soon) – A browser-based TRMNL emulator for development and testing
+
+Inspired by [React Native](https://reactnative.dev/), [React ART](https://github.com/facebook/react/tree/main/packages/react-art) and [Ink](https://term.ink/).
 
 <br>
 
@@ -135,7 +139,21 @@ export const App = (): ReactElement => (
 
 ## How it works
 
-TODO
+The implementation of `react-trmnl` is quite different from the official BYOS options offered by the TRMNL team.
+Besides the fact [byos_sinatra](https://github.com/usetrmnl/byos_sinatra) and [byos_hanami](https://github.com/usetrmnl/byos_hanami) are written in Ruby, a major difference is that
+these rely on a headless web browser (Puppeteer) to render the UI using HTML and CSS.
+
+`react-trmnl` on the other hand doesn't rely on any browser, and uses a custom React renderer to paint React components directly to 1-bit images, bypassing the need for painting by a web browser.
+This approach allows for a more efficient, faster and more reliable rendering process, which is also optimized for 1-bit monochrome screens.
+High-performance native libraries such as `libvips` (bitmap rendering), `librsvg` (vector rendering) and `freetype` (font rendering) are used to handle low-level image processing tasks.
+
+While this approach allows for much better performance and scalability, and tends to avoid [weird rendering synchronicity issues](https://www.reddit.com/r/trmnl/comments/1kenzsi/rendering_issue_today_on_several_plugins/) that can arise when using a headless browser, it does come with some limitations.
+For example, the renderer doesn't deal with the DOM at all, so don't try using HTML elements like `div`'s. Much like with React Native, you'll need to use the native components provided by `react-trmnl` to build your UI.
+
+Similarly, the renderer doesn't use CSS for styling, but rather a custom styling system that largely mimics CSS, using very similar properties and values. As such, you can use the same styling techniques you're used to with CSS.
+UI layout is powered by [Yoga](https://www.yogalayout.dev/), the layout library used by React Native, which allows for a flexible and responsive layout system, including flexbox support.
+
+`react-trmnl` therefore provides a familiar React API, but with a few differences and limitations compared to the developing React apps for the web, notably on the styling side. Supported styling properties are documented in the [API](#API) section below.
 
 ## API
 
