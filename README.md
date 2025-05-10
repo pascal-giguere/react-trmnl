@@ -1,5 +1,7 @@
 <img src="./doc/react-trmnl-logo.svg" alt="react-trmnl" width="400" />
 
+<br>
+
 Build React apps for [TRMNL](https://usetrmnl.com) e-ink devices.
 
 _Currently in development_
@@ -8,17 +10,21 @@ _Currently in development_
 [![npm version](https://img.shields.io/npm/v/react-trmnl)](https://www.npmjs.com/package/react-trmnl)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-trmnl)](https://bundlephobia.com/package/react-trmnl)
 
-What’s included:
+<br>
 
-- ⚙️ **Custom React Renderer**
+`react-trmnl` is a Node.js library including:
+
+- ⚙️ **A custom React renderer**
   - Natively render React components to 1-bit monochrome images, no browser required
   - Generate, encode and serve 1-bit BMP or PNG images from Node.js to TRMNL devices
-- 🎨 **Rendering Utilities**
+- 🎨 **Rendering utilities**
   - Colors – Easily apply dithered colors and patterns to your components
   - Images – Choose from a variety of dithering algorithms to display 1-bit images
-  - Fonts – Use bitmap fonts optimized for low-resolution, 1-bit screens
-- ⚛️ **Component library** (coming soon) – A set of pre-built components for common UI patterns
-- 🌐 **Development Server** (coming soon) – A browser-based TRMNL emulator for development and testing
+  - Fonts – Use bitmap fonts optimized for low-resolution, 1-bit screens (coming soon)
+- ⚛️ **A component library** (coming soon) – A set of pre-built components for common UI patterns
+- 🌐 **A development server** (coming soon) – A browser-based TRMNL emulator for development and testing
+
+<br>
 
 ## Getting started
 
@@ -32,6 +38,7 @@ Then, create a React component using building blocks from `react-trmnl`:
 
 ```tsx
 // App.tsx
+
 import { Trmnl, Text } from "react-trmnl";
 
 export const App = () => (
@@ -45,6 +52,7 @@ Finally, use the `render` function to render your component to a 1-bit image for
 
 ```tsx
 // index.tsx
+
 import { render, ImageFormat } from "react-trmnl";
 import { App } from "./App.js";
 
@@ -58,6 +66,8 @@ const png: Buffer = await render(<App />, ImageFormat.PNG);
 ## Advanced styling example
 
 ```tsx
+// App.tsx
+
 import React, { type ReactElement } from "react";
 import { Trmnl, Box, Image, Text, Color, DefaultFont, Dithering } from "react-trmnl";
 
