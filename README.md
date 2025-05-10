@@ -14,7 +14,7 @@ _Currently in development_
 
 <br>
 
-`react-trmnl` is a Node.js library meant to be used as part of a [BYOS (Bring Your Own Server)](<(https://docs.usetrmnl.com/go/diy/byos)>) solution for TRMNL devices.
+`react-trmnl` is a Node.js rendering library meant to be used as part of a [BYOS (Bring Your Own Server)](<(https://docs.usetrmnl.com/go/diy/byos)>) solution for TRMNL devices.
 
 It includes:
 
