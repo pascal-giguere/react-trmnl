@@ -6,7 +6,7 @@ Build efficient, pixel-perfect server-side React apps for [TRMNL](https://usetrm
 
 _Currently in development_
 
-<img src="./doc/trmnl-device.jpg" alt="TRMNL device" width="600">
+<img src="./doc/trmnl-device.jpg" alt="TRMNL device" width="750">
 
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![npm version](https://img.shields.io/npm/v/react-trmnl)](https://www.npmjs.com/package/react-trmnl)
