@@ -143,7 +143,7 @@ export const App = (): ReactElement => (
 
 The implementation of `react-trmnl` is quite different from the official BYOS options offered by the TRMNL team.
 Besides the fact [byos_sinatra](https://github.com/usetrmnl/byos_sinatra) and [byos_hanami](https://github.com/usetrmnl/byos_hanami) are written in Ruby, a major difference is that
-these rely on a headless web browser (Puppeteer) to render the UI using HTML and CSS.
+these rely on a headless web browser (Puppeteer/Ferrum) to render the UI using HTML and CSS.
 
 `react-trmnl` on the other hand doesn't rely on any browser, and uses a custom React renderer to paint React components directly to 1-bit images, bypassing the need for painting by a web browser.
 This approach allows for a more efficient, faster and more reliable rendering process, which is also optimized for 1-bit monochrome screens.
